@@ -1,0 +1,51 @@
+\input{metadata}
+
+
+\newcommand{\condBreak}[1]{\ifx#1\empty\else \\ \fi }
+
+\begin{titlepage}
+    \begin{center}
+        {\huge \bf \projTitle}
+        \vspace{.3in}
+        \begin{figure}
+            
+            \includegraphics[width=0.15\linewidth]{front/VJTI_LOGO.png}
+        \end{figure}
+
+            {\Large{Student Name: \projAuthorOneName}} \\
+            {\large{Roll Number: \projAuthorOneRollno}} \\
+        \vspace{.1in}
+
+        \ifdefined\twoAuthor
+            {\Large{Student Name: \projAuthorTwoName}} \\
+            {\large{Roll Number: \projAuthorTwoRollno}} \\
+        \fi
+
+
+        \vspace{1.3in}
+
+        {Project report submitted in partial fulfilment of the requirements
+            \\for the Degree of  M.Tech. in Computer Engineering (Specialized in Software Engineering)}
+
+        {on \today \\}
+
+        \vspace{.65in}
+
+        
+        \quad\\
+
+        {\textbf{Project Guide} \\
+            \advisorone            \condBreak{\advisortwo}
+            \advisortwo            \condBreak{\advisorthree}
+            \advisorthree          \condBreak{\advisorfour}
+            \advisorfour           \\
+        }
+
+        \vspace{3in}
+
+        {Veermata Jijabai Technological Institute\\
+            Mumbai}
+
+
+    \end{center}
+\end{titlepage}

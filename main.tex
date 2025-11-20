@@ -1,0 +1,35 @@
+\documentclass[letterpaper, 11pt]{report}
+\usepackage{reportSty}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{array}
+\usepackage{caption}
+\usepackage[font=small,labelfont=bf,justification=raggedright,singlelinecheck=false]{caption}
+
+
+ % define the title
+
+
+\begin{document}
+
+\pagenumbering{roman}
+
+\input{front/cover.tex}
+\input{front/declaration.tex}
+
+\tableofcontents
+\addcontentsline{toc}{chapter}{Table of Contents}
+
+\newpage
+\onehalfspacing
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+\input{chapters/introduction.tex} 
+\input{chapters/lit_review.tex}
+\input{chapters/system_analysis}
+
+\printbibliography[heading=bibintoc]
+
+
+\end{document}
