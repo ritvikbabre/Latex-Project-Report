@@ -1,0 +1,224 @@
+\chapter{Proposed Methodology}
+\label{ch:methodology}
+
+\section{Overview}
+This chapter outlines the proposed development methodology, implementation phases, testing procedures, and evaluation metrics for the VR driving simulator. The methodology follows an iterative design approach with continuous validation against the functional and non-functional requirements specified in Chapter~\ref{ch:system_analysis}.
+
+\section{Development Phases}
+
+\subsection{Phase 1: Hardware Prototype Development (Weeks 1-4)}
+\textbf{Objective:} Design and assemble the physical control hardware with Bluetooth connectivity.
+
+\textbf{Tasks:}
+\begin{itemize}
+    \item Design 3D-printed mounting brackets for steering wheel and pedal assembly
+    \item Wire AS5600 magnetic rotary encoder to measure steering angle (0-900°)
+    \item Integrate FSR (Force Sensing Resistor) sensors for accelerator, brake, and clutch pedals
+    \item Configure ESP32-WROOM-32 microcontroller with Bluetooth Low Energy (BLE) firmware
+    \item Implement sensor calibration routines and input smoothing algorithms
+    \item Package electronics with 18650 Li-ion battery (3000mAh) for wireless operation
+    \item Test wireless latency and battery runtime under continuous operation
+\end{itemize}
+
+\textbf{Deliverables:}
+\begin{itemize}
+    \item Functional steering wheel and pedal assembly
+    \item ESP32 firmware with BLE GATT server implementation
+    \item Calibration data and input-mapping profiles
+    \item Hardware documentation (circuit diagrams, component specifications)
+\end{itemize}
+
+\subsection{Phase 2: Unity 6 VR Environment Setup (Weeks 3-6)}
+\textbf{Objective:} Establish the core VR application framework with Meta Quest 3 integration.
+
+\textbf{Tasks:}
+\begin{itemize}
+    \item Install Unity 6 (latest LTS release) with Meta XR SDK and OpenXR plugin
+    \item Configure project for standalone Quest 3 build with Android Build Support
+    \item Implement BLE communication layer using Unity Android plugins
+    \item Create input manager to map Bluetooth sensor data to vehicle controls
+    \item Set up VR camera rig with proper IPD (Interpupillary Distance) and comfort settings
+    \item Integrate spatial audio system using Meta Audio SDK
+    \item Implement performance profiling to maintain 90 FPS minimum frame rate
+\end{itemize}
+
+\textbf{Deliverables:}
+\begin{itemize}
+    \item Unity project configured for Quest 3 deployment
+    \item BLE connection manager with automatic device pairing
+    \item Input testing scene for calibration verification
+    \item Performance baseline measurements (frame rate, latency, memory usage)
+\end{itemize}
+
+\subsection{Phase 3: Vehicle Physics and Environment Modeling (Weeks 5-10)}
+\textbf{Objective:} Implement realistic vehicle dynamics and training environments.
+
+\textbf{Tasks:}
+\begin{itemize}
+    \item Integrate Unity Vehicle Physics Pro or custom WheelCollider-based system
+    \item Model 3-5 high-end vehicles (Mercedes-Benz C-Class, BMW 3-Series, Audi A4) with accurate mass, center of gravity, and power curves
+    \item Implement automatic transmission logic (P, R, N, D modes with torque converter simulation)
+    \item Develop manual transmission system with clutch engagement, gear synchronization, and stalling
+    \item Create urban environment with Indian traffic rules (RTO-compliant road signs, lane markings)
+    \item Build highway scenario with varying traffic density and speed limits
+    \item Develop parking lot with parallel, perpendicular, and angle parking challenges
+    \item Implement weather system (clear, rain, fog) affecting visibility and tire friction
+\end{itemize}
+
+\textbf{Deliverables:}
+\begin{itemize}
+    \item Vehicle physics validation report comparing acceleration, braking distances, and handling to real-world specifications
+    \item Three fully-modeled training environments
+    \item Weather system with configurable parameters
+    \item Asset optimization report ensuring mobile VR performance targets
+\end{itemize}
+
+\subsection{Phase 4: Training Features and Assessment System (Weeks 9-12)}
+\textbf{Objective:} Implement curriculum-aligned training scenarios and automated evaluation.
+
+\textbf{Tasks:}
+\begin{itemize}
+    \item Design 10+ training scenarios mapped to RTO driving test requirements
+    \item Implement real-time performance tracking: speed monitoring, lane adherence, signal compliance, safe following distance
+    \item Develop automated scoring algorithm based on weighted penalty system
+    \item Create instructor dashboard for session monitoring and control
+    \item Build session replay system with timeline scrubbing and camera angle switching
+    \item Implement error highlighting (visual overlays for lane violations, harsh braking, etc.)
+    \item Design PDF report generator with charts, score breakdown, and improvement recommendations
+\end{itemize}
+
+\textbf{Deliverables:}
+\begin{itemize}
+    \item Training scenario library with difficulty progression
+    \item Automated assessment system documentation
+    \item Sample session reports
+    \item Instructor interface prototype
+\end{itemize}
+
+\subsection{Phase 5: User Testing and Refinement (Weeks 11-14)}
+\textbf{Objective:} Validate system usability, comfort, and training effectiveness through pilot studies.
+
+\textbf{Tasks:}
+\begin{itemize}
+    \item Recruit 15-20 participants: 10 driving learners, 5 licensed drivers, 5 driving instructors
+    \item Conduct pre-test questionnaire: prior VR experience, driving experience, motion sickness susceptibility
+    \item Run supervised testing sessions (20-30 minutes each) with standardized scenarios
+    \item Measure simulator sickness using SSQ (Simulator Sickness Questionnaire)
+    \item Collect System Usability Scale (SUS) scores
+    \item Measure hardware latency using high-speed camera (input → visual response time)
+    \item Interview instructors for pedagogical feedback
+    \item Iterate on comfort settings, difficulty balancing, and UI clarity based on feedback
+\end{itemize}
+
+\textbf{Deliverables:}
+\begin{itemize}
+    \item User testing report with quantitative metrics
+    \item Simulator sickness analysis and mitigation recommendations
+    \item System usability evaluation
+    \item Revised software build incorporating user feedback
+\end{itemize}
+
+\section{Evaluation Metrics}
+
+\subsection{Technical Performance Metrics}
+\begin{itemize}
+    \item \textbf{Input Latency:} Time from physical control input to corresponding visual response. Target: $<$ 50ms (measured using high-speed camera at 240 FPS)
+    \item \textbf{Frame Rate Stability:} Percentage of frames rendered within 90-120 FPS range. Target: $>$ 95\% consistency
+    \item \textbf{Bluetooth Connection Reliability:} Packet loss rate and reconnection time. Target: $<$ 1\% packet loss, $<$ 2 seconds reconnection
+    \item \textbf{Battery Runtime:} Continuous operation time for wireless controls. Target: $>$ 4 hours per charge
+    \item \textbf{Physics Accuracy:} Deviation from real-world vehicle specifications (0-100 km/h acceleration, 100-0 km/h braking distance). Target: $<$ 10\% error
+\end{itemize}
+
+\subsection{User Experience Metrics}
+\begin{itemize}
+    \item \textbf{Simulator Sickness Questionnaire (SSQ):} Pre- and post-session scores measuring nausea, oculomotor discomfort, disorientation. Target: $<$ 20\% increase (mild symptoms)
+    \item \textbf{System Usability Scale (SUS):} 10-item questionnaire rated 1-5. Target: SUS score $>$ 70 (above average usability)
+    \item \textbf{Presence Questionnaire (PQ):} Sense of "being there" in virtual environment. Target: $>$ 4.0/7.0 (moderate to high presence)
+    \item \textbf{Instructor Satisfaction:} Likert-scale ratings (1-5) on training effectiveness, ease of use, feature completeness. Target: Mean $>$ 4.0
+\end{itemize}
+
+\subsection{Training Effectiveness Metrics (Future Work)}
+\begin{itemize}
+    \item \textbf{Skill Transfer:} Comparison of driving test pass rates between VR-trained vs traditionally-trained learners (requires long-term study with driving school partnership)
+    \item \textbf{Learning Curve Analysis:} Reduction in errors across repeated VR training sessions
+    \item \textbf{Instructor Time Savings:} Reduction in on-road training hours required after VR pre-training
+\end{itemize}
+
+\section{Testing Procedures}
+
+\subsection{Hardware Validation Tests}
+\begin{enumerate}
+    \item \textbf{Sensor Accuracy Test:} Compare AS5600 encoder readings to known steering angles using protractor. Measure linearity error across full rotation range.
+    \item \textbf{Latency Measurement:} Record simultaneous video of physical control and VR display at 240 FPS. Count frames between input change and visual response.
+    \item \textbf{Wireless Stability Test:} Monitor BLE connection over 4-hour continuous operation. Log disconnection events, packet loss, and latency spikes.
+    \item \textbf{Battery Life Test:} Measure current draw under typical usage. Calculate runtime from battery capacity and verify experimentally.
+\end{enumerate}
+
+\subsection{Software Validation Tests}
+\begin{enumerate}
+    \item \textbf{Frame Rate Profiling:} Use Unity Profiler to identify performance bottlenecks. Ensure GPU and CPU frame times remain under 11ms (90 FPS).
+    \item \textbf{Physics Validation:} Compare simulated vehicle behavior against published specifications (acceleration curves, braking distances, cornering G-forces).
+    \item \textbf{Collision Detection:} Test edge cases (high-speed impacts, multi-object collisions, vehicle rollover) to ensure stable physics.
+    \item \textbf{Weather System:} Verify rain reduces tire friction coefficients and fog limits visibility range as intended.
+\end{enumerate}
+
+\subsection{User Study Protocol}
+\begin{enumerate}
+    \item \textbf{Pre-Session:} Informed consent, demographic questionnaire, pre-SSQ, VR safety briefing
+    \item \textbf{Tutorial Phase (5 min):} Guided introduction to controls in open environment with no traffic
+    \item \textbf{Training Session (20 min):} Three scenarios in order: (1) Urban navigation with traffic lights, (2) Highway merging and lane changes, (3) Parking maneuvers
+    \item \textbf{Post-Session:} Post-SSQ, SUS questionnaire, semi-structured interview about comfort, realism, and suggestions
+    \item \textbf{Data Collection:} Session logs (speed, steering, braking, errors), video recording of VR perspective, observer notes
+\end{enumerate}
+
+\section{Risk Mitigation}
+
+\subsection{Technical Risks}
+\begin{itemize}
+    \item \textbf{Risk:} Bluetooth latency exceeds acceptable threshold ($>$ 50ms)
+    
+    \textbf{Mitigation:} Implement predictive input filtering; option to fall back to USB wired connection; optimize BLE packet size and transmission frequency
+    
+    \item \textbf{Risk:} Quest 3 performance insufficient for complex environments
+    
+    \textbf{Mitigation:} Aggressive LOD (Level of Detail) system; occlusion culling; PC-VR tethered mode as fallback; asset optimization workflow
+    
+    \item \textbf{Risk:} Unity 6 compatibility issues with Meta XR SDK
+    
+    \textbf{Mitigation:} Verify SDK version compatibility before project start; maintain Unity LTS version; test on physical device frequently
+\end{itemize}
+
+\subsection{User Experience Risks}
+\begin{itemize}
+    \item \textbf{Risk:} High simulator sickness rates prevent extended use
+    
+    \textbf{Mitigation:} Implement comfort options (vignetting, snap turning, reduced FOV during acceleration); gradual onboarding; allow breaks; monitor SSQ scores
+    
+    \item \textbf{Risk:} Users unfamiliar with VR struggle with setup and controls
+    
+    \textbf{Mitigation:} Detailed tutorial mode; visual control hints; instructor-assisted first session; simplified UI design
+\end{itemize}
+
+\subsection{Development Risks}
+\begin{itemize}
+    \item \textbf{Risk:} Hardware assembly more complex than anticipated
+    
+    \textbf{Mitigation:} Modular design allowing component substitution; fallback to off-the-shelf gaming steering wheel; focus on software-first prototype
+    
+    \item \textbf{Risk:} Timeline delays due to technical challenges
+    
+    \textbf{Mitigation:} Prioritized feature list (MVP vs nice-to-have); weekly milestone tracking; buffer time in schedule
+\end{itemize}
+
+\section{Expected Outcomes}
+Upon completion of the proposed methodology, the project will deliver:
+\begin{enumerate}
+    \item A functional VR driving simulator prototype deployable on Meta Quest 3
+    \item Custom Bluetooth-enabled steering and pedal hardware
+    \item Documentation package including hardware schematics, software architecture, and user manuals
+    \item Pilot study results demonstrating system usability and technical performance
+    \item Identified areas for refinement and future development
+    \item Foundation for potential RTO certification and commercialization
+\end{enumerate}
+
+The validation data collected will inform iterative improvements and provide evidence for the system's viability as a driver training tool for driving schools.
