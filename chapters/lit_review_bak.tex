@@ -1,0 +1,43 @@
+\chapter{Literature Review}{\label{ch:lit_review}}
+
+This chapter reviews prior research related to Virtual Reality (VR) and Augmented Reality (AR) systems used in autonomous driving and driving simulators. Table~\ref{tab:litreview} summarizes key studies focusing on training effectiveness, physiological engagement, human factors analysis, and technical implementations within VR-based driving environments.
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\setlength{\tabcolsep}{3pt}
+\tiny
+\begin{tabularx}{\textwidth}{|X|X|X|X|X|}
+\hline
+\textbf{Title} & \textbf{Authors} & \textbf{Key Findings} & \textbf{Gaps / Limitations} & \textbf{Relevance / Context} \\ \hline
+
+\textit{Virtual Reality Tour for First-Time Users of Highly Automated Cars: Comparing the Effects of Virtual Environments with Different Levels of Interaction Fidelity (2021)}~\cite{Harari2021} & 
+Rayan Ebnali Harari, Richard Lamb, Razieh Fathi, Kevin Hulme & 
+High-Fidelity VR — using steering wheel/pedals — significantly improved automation trust, takeover time, and takeover quality for first-time users compared to Low-Fidelity VR. &
+Participants knew takeover events were coming; short driving sessions (1 hour); limited generalization of training protocol for highly automated driving (SAE L3/L4). &
+High interaction fidelity in VR training is crucial for effective motor skill transfer. Demonstrates VR's efficacy for SAE L3 automation training. \\ \hline
+
+\textit{Feasibility of AR-VR Use in Autonomous Cars for User Engagements and its Effects on Posture and Vigilance During Transit (2023)}~\cite{Muguro2023} &
+Joseph Muguro, Pringgo Widyo Laksono, Yuta Sasatake, Muhammad Ilhamdi Rusydi, Kojiro Matsushita, Minoru Sasaki &
+In-car VR engagement tasks maintained vigilance (measured by EDA, pupil size) compared to a no-task baseline. Tasks delayed hazard recognition time by less than one second. Mixed tasks improved posture. &
+Small sample (15); limited test scenarios; motion sickness not fully investigated. &
+Provides physiological evidence (EDA, pupil size) that VR/AR tasks can maintain vigilance in Autonomous Driving Systems (ADS). \\ \hline
+
+\textit{User Monitoring in Autonomous Driving System Using Gamified Task: A Case for VR/AR In-Car Gaming (2021)}~\cite{Muguro2021} &
+Joseph K. Muguro, Pringgo Widyo Laksono, Yuta Sasatake, Kojiro Matsushita, Minoru Sasaki &
+Gamified AR tasks did not significantly impair hazard recognition. Game score trends (learning, saturation, decline) can infer driver state and maintain vigilance. Gaze data confirmed focused attention. &
+Simulated VR setup instead of a real car; small, young participant sample (13 students). &
+Confirms utility of gamification in ADS to maintain vigilance. Proposes game performance metrics as indicators for automated driver monitoring. \\ \hline
+
+\textit{Driving Performance Evaluation Correlated to Age and Visual Acuities Based on VR Technologies (2020)}~\cite{Hwang2020} &
+Sooncheon Hwang, Sunhoon Kim, Dongmin Lee &
+Dynamic Visual Acuity was a stronger predictor of unsafe driving behavior than Static Visual Acuity. Poor DVA linked to higher lane deviation. &
+Small sample (65); VR driving differs from real roads; identical thresholds used for SVA and DVA. &
+Shows VR simulators’ value for studying visual acuity’s correlation to driving performance and safety. \\ \hline
+
+\end{tabularx} 
+\caption{Summary of key prior research on VR and AR systems for driving and autonomous vehicle simulation.}
+\label{tab:litreview}
+\end{table}
+
+The studies summarized in Table~\ref{tab:litreview} collectively indicate that interaction fidelity, physiological engagement monitoring, and gamification significantly influence driver training outcomes and user vigilance. These insights directly inform the system design of the proposed VR-based driving simulator presented in Chapter~\ref{ch:methodology}.
