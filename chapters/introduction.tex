@@ -1,48 +1,46 @@
 \chapter{Introduction}{\label{ch:intro}}
 \section{Background and Motivation}
 
-The integration of Virtual Reality (VR) technologies in driver training has emerged as a transformative approach to creating realistic and safe learning environments. Traditional driving instruction faces persistent limitations including safety concerns during hazardous scenario training, prohibitive vehicle costs for diverse fleet exposure, environmental constraints limiting practice opportunities, and scalability challenges for growing driving school enrollment. These limitations are particularly acute when training involves high-end or luxury vehicles such as Mercedes-Benz, BMW, or Audi models, where operational costs, insurance premiums, and maintenance expenses render traditional hands-on training economically impractical for most driving schools~\cite{Harari2021}.
+The integration of Virtual Reality (VR) technologies in driver training has emerged as a promising approach to creating realistic and safe learning environments. Traditional driving instruction faces persistent limitations including safety concerns during hazardous scenario training, prohibitive vehicle costs for diverse fleet exposure, environmental constraints limiting practice opportunities, and scalability challenges for growing driving school enrollment. These limitations are particularly acute when training involves higher-end vehicles, where operational costs, insurance premiums, and maintenance expenses render traditional hands-on training economically impractical for many driving schools and individual learners~\cite{Harari2021}.
 
-Recent advancements in consumer VR hardware, particularly standalone headsets such as the Meta Quest 3, have reached performance and affordability thresholds enabling deployment in educational contexts. Modern VR systems deliver stereoscopic rendering at 90-120 frames per second with sub-20ms motion-to-photon latency, field-of-view exceeding 100 degrees, and inside-out tracking eliminating external sensor requirements. Concurrently, embedded microcontroller platforms (ESP32, STM32) offer Bluetooth Low Energy connectivity, sufficient processing power for sensor fusion, and sub-\$10 unit costs, enabling affordable wireless control hardware development.
+Recent advancements in consumer VR hardware, particularly standalone headsets such as the Meta Quest 3, have reached performance and affordability thresholds enabling deployment in educational contexts. Modern VR systems deliver stereoscopic rendering at high refresh rates with low motion-to-photon latency, wide fields of view, and inside-out tracking eliminating external sensor requirements. The Quest 3 additionally offers native optical hand tracking and, critically for this project, support for Meta Quest Link — a feature enabling the headset to operate as a PC-VR display and tracking peripheral while a Unity application runs natively on a connected Windows PC.
 
-This convergence of technologies creates an opportunity to develop highly immersive driving simulations that closely replicate real-world vehicle dynamics, visual fidelity, and driver feedback at price points accessible to educational institutions. This project proposes the design and development of a \textbf{VR-Based Driving Simulator for Driving Schools}, focusing on realistic vehicle simulations with custom-built input hardware—including a Bluetooth-connected steering wheel, accelerator, brake, and clutch assembly—providing tactile feedback and supporting both automatic and manual transmission modes.
+This convergence of technologies creates an opportunity to develop immersive driving simulations that closely replicate real-world vehicle dynamics, visual fidelity, and driver control feedback using consumer-accessible hardware. This project presents \textbf{DriveXR}, a VR-based driving simulator combining a Meta Quest 3 headset with a Logitech G29 racing wheel and pedal set, running as a PC-hosted application via Meta Quest Link. The system is intended to help novice drivers safely practise fundamental vehicle control skills before driving on public roads.
 
 \section{Problem Statement}
 
-Despite growing interest in VR driving simulation, current systems exhibit critical limitations that hinder educational adoption:
+Despite growing interest in VR driving simulation, current systems exhibit limitations that hinder educational adoption:
 
 \begin{enumerate}
-    \item \textbf{High Cost Barriers:} Commercial driving simulators often exceed \$50,000--\$200,000 per unit, placing them beyond the financial reach of most Indian driving schools where per-student tuition fees average \rupee{}5,000--\rupee{}10,000 (\$60--\$120 USD)
+    \item \textbf{High Cost Barriers:} Commercial driving simulators used in some professional training contexts often cost tens of thousands of dollars per unit, placing them beyond the financial reach of most driving schools and educational institutions.
     
-    \item \textbf{Wired Control Constraints:} Most affordable VR driving solutions rely on USB-connected gaming steering wheels, requiring PC tethering, limiting portability, and reducing immersion through visible cable management
+    \item \textbf{Platform-Hardware Incompatibility:} Physically realistic racing wheel hardware communicates over USB HID protocols requiring host-side driver support. This creates a direct incompatibility with fully standalone VR headset deployment, a constraint not always addressed in existing lightweight VR driving research platforms.
     
-    \item \textbf{Automatic-Only Focus:} Existing educational VR simulators predominantly simulate automatic transmissions, neglecting the manual transmission proficiency required in India where over 85\% of vehicles sold have manual gearboxes
+    \item \textbf{Entertainment vs Education Focus:} Commercially available racing simulator software targets entertainment use cases rather than structured driver education, generally lacking progressive-difficulty training environments or NPC traffic behaviour suited to intersection navigation practice.
     
-    \item \textbf{Entertainment vs Education Gap:} Commercially available simulators target entertainment (racing games) rather than driver education, lacking structured curricula, performance assessment tools, and alignment with Regional Transport Office (RTO) testing standards
+    \item \textbf{Limited Hardware Fidelity Evaluation:} Few accessible projects document the practical usability trade-offs between budget and premium physical control hardware specifically in the context of VR-headset-worn use, where users cannot visually reference the pedals or controls they are operating.
     
-    \item \textbf{Limited Validation:} Few studies demonstrate empirical transfer of VR training to real-world driving performance, creating uncertainty about pedagogical effectiveness and return on investment for driving schools
+    \item \textbf{Limited Validation:} Few studies demonstrate empirical transfer of VR training to real-world driving performance, creating uncertainty about pedagogical effectiveness for driving schools considering adoption.
 \end{enumerate}
 
-There exists a clear need for a modular, scalable, and hardware-accurate VR driving simulator that bridges the affordability gap, eliminates wired constraints, supports comprehensive transmission training, and provides assessment frameworks aligned with regulatory standards—all while maintaining the realism necessary for effective skill transfer.
+There exists a clear opportunity for an accessible, consumer-hardware-based VR driving simulator that resolves the platform-hardware compatibility constraint, supports structured progressive-difficulty training environments, and documents the practical engineering and usability trade-offs involved — informing both this project's own development and future similar systems.
 
 \section{Research Objectives}
 
-The primary objective of this project is to design and validate a high-fidelity VR driving simulator that provides an immersive, realistic, and pedagogically effective training experience at a total system cost under \$5,000. The specific research objectives are:
+The primary objective of this project is to design, implement, and preliminarily evaluate a VR driving simulator built from consumer-accessible hardware, providing an immersive and realistic training experience suitable for novice driver skill development. The specific objectives are:
 
 \begin{enumerate}
-    \item \textbf{System Architecture Design:} Develop a modular VR simulation architecture integrating Meta Quest 3 headset, Unity 6 game engine, and custom ESP32-based Bluetooth control hardware with documented latency, frame rate, and reliability specifications
+    \item \textbf{System Architecture Design:} Develop a VR simulation architecture integrating a Meta Quest 3 headset, Unity 6 game engine, and commercial racing wheel hardware, resolving the platform compatibility constraints identified during development.
     
-    \item \textbf{Realistic Vehicle Simulation:} Implement physics-based vehicle dynamics accurately modeling acceleration, braking, steering response, and transmission behavior for both automatic and manual modes, validated against manufacturer specifications
+    \item \textbf{Realistic Vehicle Simulation:} Implement physics-based vehicle dynamics for a Tata Safari model, tuned to approximate real-world handling characteristics using Unity's WheelCollider physics system.
     
-    \item \textbf{Wireless Control Integration:} Design and prototype Bluetooth-enabled steering wheel and pedal assembly with sub-50ms input latency, 4+ hour battery life, and seamless device pairing
+    \item \textbf{Physical Control Integration:} Integrate a Logitech G29 racing wheel and pedal set with correct axis mapping and ergonomic pedal configuration, informed by direct comparison against a budget alternative.
     
-    \item \textbf{Performance Assessment Framework:} Create automated evaluation system measuring lane adherence, speed control, signal compliance, and safe driving behaviors aligned with Indian RTO testing criteria
+    \item \textbf{VR Hand Interaction:} Implement hand-tracking-based interaction for in-cockpit controls including the steering wheel and horn, alongside physical hardware input.
     
-    \item \textbf{Training Scenario Development:} Build diverse scenario library including urban navigation, highway driving, parking maneuvers, and emergency responses with adjustable difficulty and traffic density
+    \item \textbf{Training Environment Development:} Build a progressive-difficulty set of training environments — straight highway, curved road, and signalised city grid — with an adaptive NPC traffic system for the city environment.
     
-    \item \textbf{Usability Validation:} Conduct pilot user studies measuring simulator sickness (SSQ), system usability (SUS), presence, and qualitative feedback from driving instructors and learners
-    
-    \item \textbf{Cost-Benefit Analysis:} Document component costs, development effort, and projected per-student training cost compared to traditional vehicle-based instruction
+    \item \textbf{Preliminary Usability Evaluation:} Conduct informal testing sessions to identify key usability factors including simulator sickness patterns, hardware ergonomics, and VR headset calibration requirements, informing a future formal user study.
 \end{enumerate}
 
 \section{Scope and Limitations}
@@ -50,39 +48,39 @@ The primary objective of this project is to design and validate a high-fidelity 
 \subsection{In Scope}
 The system development encompasses:
 \begin{itemize}
-    \item Standalone Meta Quest 3 VR application with PC-tethered mode as fallback
-    \item Simulation of 3-5 vehicle models representing common luxury/high-end categories
-    \item Indian urban and highway environments with RTO-compliant signage and road markings
-    \item Both automatic (P, R, N, D) and manual (1-6 gears + clutch) transmission modes
-    \item 10+ structured training scenarios mapped to driving school curriculum
-    \item Automated performance logging and PDF report generation
-    \item Instructor dashboard for session monitoring and control
-    \item Pilot testing with 15-20 participants for usability and technical validation
+    \item A PC-hosted VR application streamed to the Meta Quest 3 via Meta Quest Link.
+    \item Simulation of a single vehicle model (Tata Safari) with tuned WheelCollider-based physics.
+    \item Three training environments of progressive difficulty: straight highway, curved road, and signalised city grid with NPC traffic.
+    \item Automatic transmission simulation (Park, Reverse, Neutral, Drive).
+    \item Physical racing wheel and pedal input via Logitech G29, with gear shifter support via Logitech Driving Force Shifter.
+    \item VR hand-tracking interaction for the steering wheel and horn.
+    \item Informal preliminary testing with the supervising faculty member and additional volunteer participants.
 \end{itemize}
 
 \subsection{Out of Scope}
 The following are explicitly excluded from the current project phase:
 \begin{itemize}
-    \item Force feedback steering wheel (cost and complexity constraints)
-    \item Motion platform or vestibular simulation (budget limitations)
-    \item Multi-user networked scenarios (focus on single-learner training)
-    \item Official RTO certification (requires long-term validation and regulatory advocacy)
-    \item Real-world driving test outcome measurement (requires longitudinal study beyond project timeline)
-    \item Commercial deployment infrastructure (licensing, technical support, mass production)
+    \item Force feedback steering resistance (hardware-capable but not yet integrated in software).
+    \item Manual transmission / clutch-engagement simulation.
+    \item Motion platform or vestibular simulation.
+    \item Multi-user networked scenarios.
+    \item Automated performance scoring and assessment logging.
+    \item Formal regulatory certification or driving-school pilot deployment.
+    \item Formal structured user study with standardised instruments (SSQ, SUS) — identified as near-term future work.
 \end{itemize}
 
 \section{Research Organization}
 
-The remainder of this document is organized as follows:
+The remainder of this document is organised as follows:
 
-\textbf{Chapter~\ref{ch:lit_review} (Literature Review):} Presents a comprehensive synthesis of 23 research papers on VR driving simulation, autonomous vehicle training, physiological monitoring, and simulator design. Includes tabular summary of key findings, gaps, and relevance, followed by systematic gap analysis identifying 15 specific research gaps across hardware, methodology, pedagogy, technical, and regulatory domains.
+\textbf{Chapter~\ref{ch:lit_review} (Literature Review):} Presents a synthesis of research papers on VR driving simulation, autonomous vehicle training, physiological monitoring, and simulator design, followed by a systematic gap analysis.
 
-\textbf{Chapter~\ref{ch:system_analysis} (System Analysis and Design):} Details functional and non-functional requirements derived from gap analysis and educational needs. Presents design alternatives comparison (VR platforms, game engines, control architectures) with justified selections. Includes system architecture, component specifications, operational workflow, and design rationale explicitly mapping technical decisions to research gaps.
+\textbf{Chapter~\ref{ch:system_analysis} (System Analysis and Design):} Details functional and non-functional requirements, design alternatives considered for VR platform, game engine, and control input architecture, and the resulting system architecture.
 
-\textbf{Chapter~\ref{ch:methodology} (Proposed Methodology):} Outlines five-phase development plan (hardware prototyping, Unity environment setup, physics modeling, training features, user testing) with deliverables, timelines, and evaluation metrics. Defines technical performance benchmarks, user experience measures, testing procedures, and risk mitigation strategies.
+\textbf{Chapter~\ref{ch:methodology} (Methodology):} Documents the development methodology as executed, including the architectural pivot from a proposed standalone/custom-hardware approach to the implemented PC-hosted Meta Quest Link architecture with commercial racing wheel hardware, and the phases of development actually carried out.
 
-	extbf{References:} Comprehensive bibliography of cited literature using biblatex with consistent IEEE-style formatting.
+\textbf{Chapter~\ref{ch:results} (Results):} Presents preliminary evaluation findings from informal testing, covering hardware fidelity, VR comfort, NPC traffic behaviour, and system performance.
 
-This structured presentation aims to provide both academic rigor through literature grounding and practical feasibility through detailed technical planning, positioning the project for successful implementation and potential contribution to the driver training technology landscape.
+\textbf{Chapter~\ref{ch:conclusion} (Conclusion and Future Work):} Summarises the project's contributions, acknowledges current limitations, and outlines a roadmap for continued development.
 
-
+This structured presentation documents both the academic grounding and the practical engineering process behind DriveXR's development, including the concrete technical constraints that shaped its final architecture.

@@ -88,38 +88,38 @@ Based on the identified research gaps and driving school needs, the system must 
 \subsection{Hardware Constraints}
 \textbf{C1: VR Headset Limitations}
 \begin{itemize}
-    \item Meta Quest 3 processing power (Snapdragon XR2 Gen 2) limits polygon count and texture resolution in standalone mode
-    \item Trade-off: Prioritize frame rate stability (72 FPS minimum) over ultra-high-resolution textures to prevent motion sickness
-    \item Solution: Implement dynamic LOD (Level of Detail) and occlusion culling; use PC-VR link for high-fidelity scenarios
+    \item The Meta Quest 3's mobile chipset limits achievable polygon count and texture resolution when rendering natively on-device.
+    \item Trade-off: prioritise frame rate stability over maximum visual fidelity to reduce simulator sickness risk.
+    \item Solution adopted: the system is deployed as a PC-hosted application streamed to the headset via Meta Quest Link, offloading rendering to desktop GPU hardware rather than the headset's onboard chipset. This resolves the constraint directly rather than requiring aggressive on-device optimisation.
 \end{itemize}
 
-\textbf{C2: Bluetooth Latency and Bandwidth}
+\textbf{C2: Racing Wheel Hardware Compatibility}
 \begin{itemize}
-    \item Bluetooth 5.0 offers ~10–30ms latency but is susceptible to interference in crowded 2.4 GHz spectrum
-    \item Trade-off: Accept slight latency increase versus wired connection complexity and user mobility restrictions
-    \item Solution: Use BLE with custom GATT profiles optimized for low-latency HID data; implement USB fallback mode
+    \item USB HID racing wheel hardware (Logitech G29) requires host-side driver initialisation that is not supported by the Quest 3's Android-based operating system in a standalone deployment.
+    \item Trade-off: a fully standalone deployment would need to forgo physical wheel hardware in favour of hand-tracking-only or Quest controller input, sacrificing control realism.
+    \item Solution adopted: the PC-hosted Meta Quest Link architecture (Section~\ref{sec:control_input_architecture}) allows the racing wheel to connect directly to the PC, where standard Windows USB HID drivers apply without limitation.
 \end{itemize}
 
-\textbf{C3: Force Feedback Absence}
+\textbf{C3: Force Feedback}
 \begin{itemize}
-    \item Custom-built steering wheel lacks motorized force feedback present in high-end simulators ($>$\$10,000)
-    \item Trade-off: Reduced haptic realism versus significant cost savings (force feedback wheels alone cost \$1000–3000)
-    \item Solution: Compensate with visual cues (steering resistance indicator on HUD), audio feedback (tire squeal), and vibrational alerts via Quest 3 controllers
+    \item Force feedback steering resistance, while supported by the G29's hardware, has not yet been integrated into the simulation software.
+    \item Trade-off: reduced haptic realism for road-surface and cornering-load feedback versus development time allocated to core simulation stability.
+    \item Mitigation: audio feedback (tyre skid sound, engine load) partially compensates; force feedback integration is identified as future work (Chapter~\ref{ch:conclusion}).
 \end{itemize}
 
 \subsection{Software and Performance Constraints}
-\textbf{C4: Physics Engine Limitations}
+\textbf{C4: Physics Engine Fidelity}
 \begin{itemize}
-    \item Unity/Unreal default vehicle physics are optimized for gaming, not driver training accuracy
-    \item Trade-off: Computational cost of high-fidelity tire models (e.g., Pacejka Magic Formula) versus frame rate
-    \item Solution: Use simplified but validated physics models (mass-spring damper for suspension, friction circles for lateral grip) with parameter tuning from real vehicle data
+    \item Unity's built-in WheelCollider physics component is optimised for general-purpose vehicle games rather than driver-training-grade accuracy.
+    \item Trade-off: computational cost of high-fidelity tyre slip modelling versus frame rate stability.
+    \item Solution adopted: WheelCollider suspension and friction curve parameters were iteratively tuned against qualitative real-world handling comparisons rather than implementing a full Pacejka tyre model, balancing accuracy against development time and runtime performance.
 \end{itemize}
 
-\textbf{C5: Asset Development Budget}
+\textbf{C5: NPC Traffic Behaviour Complexity}
 \begin{itemize}
-    \item Photorealistic 3D models of licensed vehicle interiors (Mercedes, BMW) require substantial licensing fees or extensive 3D modeling effort
-    \item Trade-off: Generic high-end vehicle interiors versus brand-specific accuracy
-    \item Solution: Model representative "luxury sedan" interior with adjustable branding overlays; prioritize functional accuracy (control placement, mirror angles) over exact brand aesthetics
+    \item Reliable multi-vehicle NPC navigation at signalised intersections is a recognised open problem in traffic simulation, not unique to this project.
+    \item Trade-off: sophisticated traffic-flow algorithms (e.g., reinforcement-learning-based driver agents) versus a deterministic, debuggable rule-based approach appropriate for a training simulator where predictable AI behaviour is preferable to emergent complexity.
+    \item Solution adopted: a finite state machine NPC controller (Chapter~\ref{ch:methodology}) with explicit states and yield-priority ordering, favouring predictability and debuggability over behavioural sophistication.
 \end{itemize}
 
 \section{Design Alternatives and Justification}
@@ -127,43 +127,44 @@ Based on the identified research gaps and driving school needs, the system must 
 \subsection{VR Platform Selection}
 \textbf{Alternatives Considered:}
 \begin{enumerate}
-    \item \textbf{Valve Index + PC:} Pros: Superior FOV (130°), refresh rate (144 Hz), force feedback support. Cons: High cost (\$1000 headset + \$1500 PC), wired tethering limits mobility.
-    \item \textbf{Meta Quest 3:} Pros: Wireless standalone mode, affordable (\$500), inside-out tracking, passthrough AR. Cons: Lower processing power, 90 Hz max refresh rate.
-    \item \textbf{PSVR2 + PlayStation 5:} Pros: Affordable (\$1000 total), haptic feedback in controllers. Cons: Closed ecosystem, limited development flexibility.
+    \item \textbf{Valve Index + PC:} Pros: superior field of view (130°) and refresh rate (144 Hz). Cons: high combined cost, wired tethering by design, no native hand tracking.
+    \item \textbf{Meta Quest 3:} Pros: wireless standalone capability, affordable relative to PC-VR headsets, inside-out tracking, native hand tracking, and — critically for this project — Meta Quest Link support enabling a PC-hosted fallback architecture. Cons: lower on-device processing power than a dedicated PC-VR headset.
+    \item \textbf{PSVR2 + PlayStation 5:} Pros: affordable bundle cost, controller haptics. Cons: closed development ecosystem unsuitable for a research/education project requiring custom Unity development.
 \end{enumerate}
-\textbf{Selected: Meta Quest 3} — Justification: Best balance of cost, wireless freedom, and developer accessibility. Supports both standalone (for basic scenarios) and PC-VR link (for advanced training), aligning with NFR1 and NFR4.
+\textbf{Selected: Meta Quest 3} — Justification: the Quest 3's support for Meta Quest Link proved decisive, as it enabled the PC-hosted architecture that resolved the racing wheel compatibility constraint (C2) while retaining the headset's native hand tracking, a requirement not met by pursuing a PC-VR-only headset that would need separate hand-tracking hardware.
 
 \subsection{Game Engine Selection}
 \textbf{Alternatives Considered:}
 \begin{enumerate}
-    \item \textbf{Unity:} Pros: Extensive VR support (XR Interaction Toolkit), large asset store, C\# scripting familiarity. Cons: Less advanced default vehicle physics.
-    \item \textbf{Unreal Engine:} Pros: Superior graphics (Nanite, Lumen), Blueprint visual scripting, Chaos vehicle physics. Cons: Steeper learning curve, larger build sizes.
-    \item \textbf{CARLA Simulator:} Pros: Open-source, designed for autonomous driving research, pre-built urban environments~\cite{Silvera2022}. Cons: Primarily Python-based, limited VR headset support, requires significant C++ customization.
+    \item \textbf{Unity:} Pros: mature XR Interaction Toolkit with first-class Meta Quest Link and OpenXR support, extensive C\# scripting ecosystem, large asset store for vehicle and environment assets.
+    \item \textbf{Unreal Engine:} Pros: superior default rendering fidelity, built-in Chaos vehicle physics. Cons: steeper learning curve for the development team, less mature Quest hand-tracking integration at project outset.
+    \item \textbf{CARLA Simulator:} Pros: purpose-built for driving simulation research. Cons: primarily Python-based with limited native VR headset support, requiring substantial custom integration work.
 \end{enumerate}
-\textbf{Selected: Unity 6 (Latest LTS)} — Justification: Unity 6 represents the latest stable release with improved rendering performance, enhanced XR support, and better mobile optimization for Quest 3. Faster prototyping compared to Unreal, proven VR deployment pipeline, extensive asset store ecosystem, and active developer community. Vehicle physics will be enhanced with custom scripts or third-party assets (e.g., Edy's Vehicle Physics, Realistic Car Controller). Unity's C\# scripting environment also facilitates Bluetooth integration via Android native plugins.
+\textbf{Selected: Unity 6} — Justification: Unity 6's XR Interaction Toolkit provided direct, well-documented support for the Meta Quest Link and hand-tracking pipeline central to this project's architecture, and the team's existing C\# familiarity favoured faster iteration during development.
 
+\label{sec:control_input_architecture}
 \subsection{Control Input Architecture}
 \textbf{Alternatives Considered:}
 \begin{enumerate}
-    \item \textbf{Custom PCB with USB HID:} Pros: Lowest latency (<5ms), plug-and-play compatibility. Cons: Wired connection reduces user comfort, cable management complexity.
-    \item \textbf{ESP32 Bluetooth LE:} Pros: Wireless, low power, supports custom GATT profiles, affordable (\$10–20 per unit). Cons: 10–30ms latency, potential interference.
-    \item \textbf{Commercial Racing Wheel (Logitech G29):} Pros: Ready-made, force feedback included. Cons: Expensive (\$300–400), fixed form factor unsuitable for driving school setup, limited customization.
+    \item \textbf{Custom ESP32-based Bluetooth controls:} Pros: potentially lower per-unit hardware cost, wireless operation, full design customisability. Cons: requires custom PCB and sensor integration work, introduces calibration and reliability variables, and — most significantly — a Bluetooth Low Energy HID device still requires host-side driver support that the Quest 3 standalone environment does not provide, meaning this approach does not resolve the same underlying platform constraint (C2) as a commercial USB wheel connected via a PC-hosted architecture.
+    \item \textbf{Budget commercial racing wheel (Nitho Drive Pro One):} Pros: low cost, plug-and-play PC compatibility. Cons: found through direct testing to have insufficient rotation range (270° vs 900° for real vehicles), an undersized wheel, and pedal spacing too narrow for reliable use while wearing a VR headset (Chapter~\ref{ch:methodology}).
+    \item \textbf{Premium commercial racing wheel (Logitech G29):} Pros: 900° rotation range matching real vehicles, full-size wheel, force feedback capability, separated pedal set resolving the identification problem observed with the budget unit, and native USB HID compatibility with a PC-hosted architecture. Cons: higher unit cost than a custom or budget solution.
 \end{enumerate}
-\textbf{Selected: ESP32 BLE with USB Fallback} — Justification: Wireless operation enhances user experience (NFR2), modular design allows independent sensor upgrades (NFR3), and USB mode ensures reliability during demonstrations or competitions. Custom firmware enables latency optimization (<20ms achievable).
+\textbf{Selected: Logitech G29 via PC-hosted USB connection} — Justification: direct user testing (Chapter~\ref{ch:results}) confirmed the G29 was rated substantially more realistic than the budget alternative, and its native USB HID compatibility with a Windows PC directly resolved the standalone-deployment driver incompatibility that motivated reconsideration of the originally proposed ESP32-based approach. This decision was made after the ESP32 approach was determined, during early development, to face the same platform-level input constraint as any USB or BLE HID device attempting standalone Quest 3 operation.
 
 \section{System Objectives}
 Based on the requirements analysis and design trade-offs, the system objectives are:
 \begin{itemize}
-    \item To design a modular VR-based driving simulation environment replicating realistic car control and behavior.
-    \item To integrate Bluetooth-enabled hardware input devices for steering, acceleration, braking, and gear shifting with latency $<$ 50ms.
-    \item To ensure compatibility with the Meta Quest 3 headset (both standalone and PC-VR link modes) for immersive interaction.
-    \item To provide automated performance analytics for driver evaluation and training improvement aligned with RTO assessment criteria.
-    \item To develop a cost-effective solution ($<$\$5000 total) deployable in Indian driving schools with minimal technical infrastructure.
+    \item To design a VR-based driving simulation environment replicating realistic vehicle control and handling behaviour.
+    \item To integrate a commercially available racing wheel and pedal set providing physically realistic steering, throttle, and braking input.
+    \item To ensure compatibility with the Meta Quest 3 headset via a PC-hosted Meta Quest Link architecture, retaining full head-tracking and hand-tracking functionality.
+    \item To provide a structured, progressive-difficulty set of training environments suitable for novice driver familiarisation through to advanced intersection navigation.
+    \item To develop a system using consumer-accessible hardware components, avoiding the cost and complexity of dedicated commercial simulator infrastructure.
 \end{itemize}
 
 \section{Comparative Analysis with Existing Solutions}
 
-Table~\ref{tab:comparative_analysis} compares the proposed system against existing commercial and research VR driving simulators based on key design parameters derived from the requirements analysis.
+Table~\ref{tab:comparative_analysis} compares DriveXR against existing commercial and research VR driving simulators based on key design parameters.
 
 \begin{table}[H]
 \caption{Comparative analysis of VR driving simulator solutions}
@@ -172,96 +173,84 @@ Table~\ref{tab:comparative_analysis} compares the proposed system against existi
 \small
 \begin{tabular}{|p{3cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|p{2.2cm}|}
 \hline
-\textbf{Parameter} & \textbf{Proposed System} & \textbf{DReyeVR~\cite{Silvera2022}} & \textbf{Commercial Racing Sim} & \textbf{Traditional Simulator} \\ \hline
-Cost & $<$\$5000 & $<$\$5000 & \$15,000–50,000 & \$30,000–100,000 \\ \hline
-VR Platform & Meta Quest 3 (wireless) & Various HMDs (tethered) & Valve Index/Varjo (tethered) & Projector/screens (no VR) \\ \hline
-Force Feedback & No (visual/audio cues) & Optional & Yes (high-fidelity) & Yes (hydraulic) \\ \hline
-Dual Transmission & Yes (auto + manual) & No & Manual only & Manual only \\ \hline
-Bluetooth Controls & Yes (custom ESP32) & No (USB) & No (proprietary) & Wired industrial \\ \hline
-Target Users & Driving schools/learners & Researchers & Racing enthusiasts & Commercial training \\ \hline
-Deployment & Standalone + PC-VR & PC-VR only & PC-VR only & Fixed installation \\ \hline
-Customizability & High (modular design) & High (open-source) & Low (proprietary) & Low (vendor lock-in) \\ \hline
-Regulatory Focus & RTO-aligned metrics & Research protocols & Entertainment & Commercial licensing \\ \hline
+\textbf{Parameter} & \textbf{DriveXR} & \textbf{DReyeVR~\cite{Silvera2022}} & \textbf{Commercial Racing Sim} & \textbf{Traditional Simulator} \\ \hline
+Approx. Hardware Cost & Consumer VR headset + racing wheel & Consumer/research VR + PC & \$15,000--50,000 & \$30,000--100,000 \\ \hline
+VR Platform & Meta Quest 3 (PC-hosted via Link) & Various HMDs (tethered) & Valve Index/Varjo (tethered) & Projector/screens (no VR) \\ \hline
+Force Feedback & Hardware-capable, not yet integrated & Optional & Yes (high-fidelity) & Yes (hydraulic) \\ \hline
+Hand Tracking & Yes (native Quest 3) & No & No & No \\ \hline
+Control Hardware & Commercial racing wheel (Logitech G29) & USB wheel/keyboard & Proprietary & Wired industrial \\ \hline
+Target Users & Novice drivers / driving schools & Researchers & Racing enthusiasts & Commercial training \\ \hline
+Deployment & PC-hosted with VR headset & PC-VR only & PC-VR only & Fixed installation \\ \hline
+NPC Traffic & Yes (state-machine controller) & Limited & N/A & N/A \\ \hline
 \end{tabular}
 \end{table}
 
 \textbf{Key Differentiators:}
 \begin{itemize}
-    \item \textbf{Affordability:} Matches research systems but undercuts commercial solutions by 70–90\%, addressing Gap 1 from Section~\ref{sec:gap_analysis}.
-    \item \textbf{Wireless Operation:} Only solution offering Bluetooth controls with Quest 3 standalone mode, enhancing portability (Gap 2).
-    \item \textbf{Dual-Mode Transmission:} Uniquely supports both automatic and manual training in single platform (Gap 3).
-    \item \textbf{Educational Focus:} Prioritizes driver training outcomes over entertainment, with RTO-compatible assessment (Gap 7, Gap 13).
+    \item \textbf{Accessible hardware:} built entirely from consumer-available components — a Meta Quest 3 headset and a commercial racing wheel — without requiring custom electronics fabrication.
+    \item \textbf{Native hand tracking:} unlike DReyeVR or typical commercial simulators, DriveXR retains Quest 3 hand tracking for in-cockpit interactions (steering wheel grab, horn) alongside physical wheel input.
+    \item \textbf{Structured progressive training:} three environments of increasing difficulty support a defined skill-building progression not present in research-focused platforms.
+    \item \textbf{Integrated NPC traffic:} a purpose-built state-machine traffic controller for intersection navigation training, an area many lightweight research platforms do not prioritise.
 \end{itemize}
 
 \section{System Components and Architecture}
 
-The proposed system architecture consists of three tightly integrated subsystems designed to address the functional requirements while respecting the identified constraints.
+The system architecture consists of three tightly integrated subsystems.
 
 \subsection{Hardware Interface Subsystem}
-The physical control setup comprises:
 \begin{itemize}
-    \item \textbf{Steering Wheel Assembly:} Salvaged automotive steering wheel fitted with AS5600 magnetic rotary encoder (12-bit resolution, 4096 steps per revolution) providing 0.088° angular precision. Mounted on ball bearing hub for smooth 900° rotation range.
-    \item \textbf{Pedal Set:} Three independent pedals (accelerator, brake, clutch) using FSR (Force Sensitive Resistor) sensors with 10-bit ADC conversion. Pedal travel: 80mm with adjustable spring tension (1–5 kg actuation force).
-    \item \textbf{Gear Shifter:} H-pattern mechanical shifter with hall-effect sensors at each gate position (1–6, R, N). Alternative: Sequential paddle shifters for automatic mode (+ / - buttons).
-    \item \textbf{Microcontroller:} ESP32-WROOM-32 with Bluetooth 5.0 LE, dual-core 240 MHz processor, 16 analog input channels. Custom firmware implements BLE HID profile with 20ms polling rate, 50ms max latency.
-    \item \textbf{Power Supply:} Rechargeable 18650 Li-ion battery pack (3000 mAh) providing 8–12 hours continuous operation. USB-C charging with power management IC.
+    \item \textbf{Racing Wheel:} Logitech G29 Driving Force, offering 900° steering rotation, force feedback capability, and separated accelerator/brake/clutch pedals connected via USB to the host PC.
+    \item \textbf{Gear Shifter:} Logitech Driving Force Shifter, an H-pattern mechanical shifter connecting to the G29 base, providing physical gear selection input.
+    \item \textbf{VR Headset:} Meta Quest 3, providing head tracking, optical hand tracking, and stereoscopic display, connected to the host PC via Meta Quest Link (wired USB-C or wireless Air Link).
 \end{itemize}
 
-Connected via Bluetooth or USB-C (fallback mode) to the VR headset or PC.
+Both the racing wheel/shifter assembly and the VR headset connect to the same host PC, which runs the Unity application and coordinates all input and rendering.
 
 \subsection{Software Simulation Subsystem}
-Developed in Unity 2023 LTS with the following modules:
+Developed in Unity 6 with the following modules:
 \begin{itemize}
-    \item \textbf{Input Manager:} Receives Bluetooth/USB HID data, applies calibration curves, dead-zone filtering, and maps to vehicle control parameters.
-    \item \textbf{Vehicle Physics Engine:} Custom implementation based on Edy's Vehicle Physics Pro, modeling 6-DOF rigid body dynamics, tire slip curves (simplified Pacejka), differential gearing, and clutch engagement.
-    \item \textbf{Environment Renderer:} Procedural city generation (Urban Traffic Simulator asset) + hand-crafted scenarios. Dynamic weather system, traffic AI (rule-based agents), pedestrian spawning.
-    \item \textbf{Assessment Module:} Real-time metric calculation (speed compliance, lane center offset, braking jerk, gear shift timing). Event logging to SQLite database. Score computation using weighted rubric aligned with Indian RTO learner's license test criteria.
-    \item \textbf{VR Interaction:} XR Interaction Toolkit for head tracking, hand controllers (menu navigation), spatial audio (FMOD), comfort features (vignetting, snap-turn option).
+    \item \textbf{Input Manager:} Reads racing wheel and pedal axis data via Unity's Input System, applying deadzone filtering and the pedal-axis remapping required by the G29's inverted resting-position convention (Chapter~\ref{ch:methodology}).
+    \item \textbf{Vehicle Physics Engine:} Built on Unity WheelCollider components with custom-tuned suspension, friction, and drivetrain logic implementing front-wheel-drive behaviour and a four-position automatic gearbox.
+    \item \textbf{Environment System:} Three hand-crafted training environments hosted within a single scene, with a state-machine-driven NPC traffic controller providing signalised intersection navigation in the city environment.
+    \item \textbf{VR Interaction:} XR Interaction Toolkit providing head tracking, hand-tracking-based cockpit interaction (steering wheel, horn), and a world-space VR menu for environment selection.
 \end{itemize}
 
 \subsection{VR Interface Subsystem}
-Meta Quest 3 headset provides:
+The Meta Quest 3 headset provides:
 \begin{itemize}
-    \item \textbf{Head Tracking:} 6-DOF inside-out tracking via four IR cameras, <10ms motion-to-photon latency.
-    \item \textbf{Stereoscopic Rendering:} Dual 2064×2208 LCD panels per eye, 90 Hz refresh rate, 110° horizontal FOV.
-    \item \textbf{Spatial Audio:} Integrated speakers with 3D positional audio (Unity Audio Spatializer).
-    \item \textbf{Passthrough AR:} Color passthrough cameras enabling safe guardian setup and real-world awareness during breaks.
+    \item \textbf{Head Tracking:} Six-degrees-of-freedom inside-out tracking via onboard cameras, passed through to the host PC via Meta Quest Link.
+    \item \textbf{Hand Tracking:} Optical hand tracking used for in-cockpit interactions, similarly passed through via Meta Quest Link's OpenXR implementation.
+    \item \textbf{Stereoscopic Rendering:} Rendered content is computed on the host PC GPU and streamed to the headset display via Meta Quest Link, rather than rendered natively on-device.
 \end{itemize}
 
-Deployment modes: (1) Standalone (Quest 3 native), (2) PC-VR Link (via USB-C or Air Link wireless streaming).
+Deployment mode: PC-hosted via Meta Quest Link, connecting either by USB-C cable or wirelessly via Air Link.
 
 \section{System Architecture Diagram}
 
-Figure~\ref{fig:system_architecture} illustrates the data flow and component interactions within the integrated VR driving simulator system.
+Figure~\ref{fig:system_architecture} illustrates the data flow and component interactions within the DriveXR system.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.95\textwidth]{figs/system_architecture.pdf}
-    \caption{System architecture showing data flow from hardware inputs through simulation engine to VR rendering and assessment output. Dashed lines indicate wireless (Bluetooth) connections; solid lines represent internal software module communication.}
+    \caption{System architecture showing data flow from hardware inputs (racing wheel, headset tracking) through the Unity simulation engine to VR rendering output via Meta Quest Link.}
     \label{fig:system_architecture}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{figs/model_diagram.pdf}
-    \caption{System model diagram illustrating the conceptual architecture and relationships between core system components.}
+    \includegraphics[width=0.85\textwidth]{figs/model_diagram.pdf}
+    \caption{Conceptual system model illustrating the three principal layers of DriveXR — physical hardware input, the Unity-based simulation engine, and VR presentation via Meta Quest Link — and the data flow between them.}
     \label{fig:model_diagram}
 \end{figure}
 
 \section{Design Rationale Summary}
 
-The design decisions documented in this chapter directly address the research gaps identified in Section~\ref{sec:gap_analysis}:
-
 \begin{itemize}
-    \item \textbf{Gap 1 (Affordable Hardware):} ESP32-based custom controls + Meta Quest 3 + consumer PC achieves $<$\$5000 total cost while maintaining training-grade fidelity.
-    \item \textbf{Gap 2 (Wireless Integration):} Bluetooth LE with optimized firmware ensures <50ms latency, eliminating cable management issues and enhancing user mobility.
-    \item \textbf{Gap 3 (Dual Transmission):} Modular gear shifter design + software physics support both automatic and manual modes without hardware swapping.
-    \item \textbf{Gap 7 (Standardized Assessment):} Custom assessment module implements RTO learner's test criteria (speed limits, lane discipline, signal compliance) with automated scoring.
-    \item \textbf{Gap 10 (Photorealistic Rendering):} Unity 2023 HDRP + optimized assets provide luxury vehicle interiors with realistic dashboards, mirrors, and environmental detail within Quest 3 performance constraints.
-    \item \textbf{Gap 13 (Regulatory Alignment):} Data logging format and assessment rubrics designed for future submission to Indian RTO authorities as validation evidence for VR training hour equivalency.
+    \item \textbf{Consumer-hardware accessibility:} using a commercial racing wheel and consumer VR headset avoids the cost, fabrication risk, and calibration overhead of custom electronics while still meeting the project's physical-realism requirements.
+    \item \textbf{Platform compatibility resolution:} the PC-hosted Meta Quest Link architecture directly resolves the fundamental incompatibility between USB/BLE HID racing wheel hardware and standalone Quest 3 operation.
+    \item \textbf{Retained VR capability:} despite not being a fully standalone deployment, the system retains full head-tracking and hand-tracking functionality identical to native operation.
+    \item \textbf{Predictable NPC behaviour:} a deterministic finite-state-machine traffic controller was prioritised over more complex adaptive AI approaches, favouring debuggability and behavioural predictability appropriate for a training context.
 \end{itemize}
-
-The comparative analysis (Table~\ref{tab:comparative_analysis}) demonstrates that this design occupies a unique position: research-grade flexibility at commercial-training affordability, specifically tailored for the Indian driving school market.
 
 \section{Workflow and Operational Flow}
 The workflow diagram (Figure~\ref{fig:workflow}) shows the sequential process of system operation—from initialization through user interaction to post-session evaluation—illustrating how the system supports a complete training cycle.
@@ -339,64 +328,36 @@ The project relies on consumer-grade VR hardware (Meta Quest 3) and custom Bluet
 \subsection{Economic Feasibility}
 
 \textbf{Cost-Benefit Analysis:}
-Economic viability is evaluated by comparing development and deployment costs against projected benefits for driving school adoption.
+Economic viability is evaluated by comparing the actual development cost incurred against the cost of commercial alternatives, based on hardware acquired during this project rather than a hypothetical projected cost.
 
-\textbf{Development Costs (One-Time):}
+\textbf{Development Costs Incurred:}
 \begin{itemize}
-    \item \textbf{Hardware Prototyping:} Steering wheel assembly (₹8,000), pedals with load cells (₹6,000), gear shifter (₹4,000), ESP32 dev boards and sensors (₹3,000), miscellaneous components (₹4,000). \textit{Total: ₹25,000 (\$300 USD)}.
-    
-    \item \textbf{VR Headset:} Meta Quest 3 (128 GB): ₹50,000 (\$600 USD).
-    
-    \item \textbf{Software Licenses:} Unity Pro annual license (₹15,000/\$180 USD for educational discount), FMOD audio middleware (free for indie projects $<$\$500K revenue), 3D asset packs (vehicles, environments: ₹20,000/\$240 USD from Unity Asset Store).
-    
-    \item \textbf{Development Labor:} Estimated 6 months at 20 hours/week for a 3-member student team (unfunded academic project; opportunity cost estimated at ₹1,20,000 based on typical internship stipends).
-    
-    \item \textbf{Grand Total (Development):} ₹2,30,000 (\$2,760 USD).
-\end{itemize}
-
-\textbf{Per-Unit Deployment Cost (Driving School):}
-\begin{itemize}
-    \item Hardware replication: ₹25,000 (controls) + ₹50,000 (Quest 3) = ₹75,000 (\$900 USD).
-    \item Software licensing: One-time purchase of simulator app (proposed ₹10,000/\$120 USD per station if commercialized) or open-source distribution (₹0 for academic release~\cite{Silvera2022}).
-    \item \textbf{Total per Station:} ₹85,000 (\$1,020 USD) for commercial model; ₹75,000 (\$900 USD) for open-source adoption.
+    \item \textbf{Racing Wheel and Shifter:} Logitech G29 Driving Force and Logitech Driving Force Shifter, acquired via project funding request (Appendix~\ref{app:funding}).
+    \item \textbf{VR Headset:} Meta Quest 3, used as the primary development and testing headset.
+    \item \textbf{Software:} Unity 6 Personal edition (no licensing cost at current development scale); no paid third-party asset packages were required beyond the vehicle and environment models used.
+    \item \textbf{Development Labour:} Single-student development effort over the current project timeline, supervised by the project guide.
 \end{itemize}
 
 \textbf{Comparative Economics:}
-Traditional commercial driving simulators cost ₹15,00,000--₹50,00,000 (\$18,000--\$60,000 USD) per unit. The proposed system achieves \textbf{85--95\% cost reduction} while maintaining educational effectiveness~\cite{He2022}. Break-even analysis for a driving school operating 5 training stations:
-\begin{itemize}
-    \item Traditional simulator investment: ₹75,00,000 (\$90,000 USD).
-    \item Proposed VR simulator investment: ₹4,25,000 (\$5,100 USD).
-    \item \textbf{Savings: ₹70,75,000 (\$84,900 USD)} — sufficient to fund 100+ learner enrollments.
-\end{itemize}
+Commercial dedicated driving simulators — including motion-platform and multi-screen installations used in some professional driving instruction contexts — typically cost several times more than the consumer hardware combination used in this project (a Meta Quest 3 headset and a mid-range commercial racing wheel). Precise return-on-investment or break-even projections for driving-school deployment are not presented here, as this project has not yet reached a pilot deployment stage; such analysis is identified as future work contingent on the formal user study and any subsequent institutional partnership (Chapter~\ref{ch:conclusion}).
 
-\textbf{Return on Investment (ROI):}
-Assuming a driving school charges ₹500 (\$6 USD) per VR training hour and operates each station 6 hours/day × 25 days/month:
-\begin{itemize}
-    \item Monthly revenue per station: ₹75,000 (\$900 USD).
-    \item ROI period: ₹85,000 ÷ ₹75,000 ≈ \textbf{1.2 months}.
-\end{itemize}
-
-\textbf{Economic Verdict:} Highly feasible. Low capital expenditure, rapid payback period, and significant cost advantage over alternatives strongly favor economic viability. Scalability to multiple driving schools amplifies impact.
+\textbf{Economic Verdict:} The hardware cost of the current system compares favourably against commercial simulator alternatives on a qualitative basis. A rigorous cost-benefit and ROI analysis requires deployment-scale data not yet available at this stage of the project and is deferred to future work.
 
 \subsection{Operational Feasibility}
 
 \textbf{User Acceptance and Usability:}
-Operational success depends on instructor and learner acceptance, ease of use, and integration into existing curricula.
+Operational feasibility has been assessed qualitatively through informal testing sessions with the supervising faculty member and additional volunteer participants, as detailed in Chapter~\ref{ch:results}. No formal instructor onboarding protocol, curriculum integration study, or structured usability survey has yet been conducted; these are identified as necessary steps prior to any driving-school deployment.
 
 \begin{itemize}
-    \item \textbf{Instructor Training:} System requires 2--3 hour onboarding session covering scenario configuration, assessment report interpretation, and hardware troubleshooting. User interface designed for non-technical users (tablet-based instructor panel with drag-and-drop scenario builder). Pilot testing at VJTI's automotive engineering lab confirms instructors can operate independently after minimal training.
-    
-    \item \textbf{Learner Comfort:} VR adoption hinges on minimizing motion sickness. Comfort protocols include: (1) 30-minute session limits with 10-minute breaks~\cite{Lindal2019}, (2) gradual VR exposure (start with stationary scenarios before moving to dynamic driving), (3) adjustable comfort settings (reduced FOV, teleportation mode for extreme discomfort cases). Pre-pilot surveys indicate 78\% of participants report "comfortable" or "very comfortable" experiences after 20-minute sessions.
-    
-    \item \textbf{Curriculum Integration:} System aligns with Indian RTO learning license syllabus: vehicle controls, traffic rules, road signs, parking maneuvers. Instructors can map VR scenarios to lesson plans (e.g., Week 2: Urban Lane Discipline → VR Scenario: "Mumbai Suburban Roads"). Session logs export to Excel/PDF for record-keeping compliance.
-    
-    \item \textbf{Maintenance and Support:} Hardware durability tested for 100+ hours continuous use without component failure. Bluetooth pairing issues resolved via documented reconnection protocol (manual mode fallback until firmware update). Software updates pushed via Unity Cloud Build; instructors notified via in-app prompts.
+    \item \textbf{Learner Comfort:} Preliminary observations (Chapter~\ref{ch:results}) indicate that simulator sickness is present in VR-inexperienced users initially, with symptoms reducing across repeated sessions. This is consistent with patterns reported in prior literature on VR acclimatisation, but has not yet been quantified for this specific system using a standardised instrument such as the Simulator Sickness Questionnaire.
+    \item \textbf{Hardware Setup:} The system requires a PC capable of running Unity applications, a Meta Quest 3 headset, and the racing wheel/shifter assembly connected via USB — a moderate but not extensive infrastructure requirement compared to dedicated simulator installations.
+    \item \textbf{Maintenance:} No formal durability or long-duration reliability testing has been conducted at this stage. Hardware maintenance considerations are limited to standard care of consumer VR and racing wheel peripherals.
 \end{itemize}
 
-\textbf{Organizational Readiness:}
-Driving schools require minimal infrastructure changes. System operates in 3m × 3m play area with standard electrical outlets. No specialized ventilation or motion platform foundations needed. Compatibility with existing lesson scheduling software (via CSV import/export) ensures smooth workflow integration.
+\textbf{Organisational Readiness:}
+No formal engagement with driving schools or regulatory bodies has taken place at this stage of the project. Any future deployment consideration would require the structured evaluation and institutional partnership discussed in Chapter~\ref{ch:conclusion}.
 
-\textbf{Operational Verdict:} Feasible with moderate preparation. Success contingent on comprehensive instructor training and learner orientation sessions. Risk mitigation through pilot deployments (5--10 schools) before wider rollout.
+\textbf{Operational Verdict:} Provisionally feasible based on informal testing, but formal operational feasibility — instructor training requirements, curriculum integration, and institutional adoption — remains to be established through the structured evaluation planned as future work.
 
 \subsection{Schedule Feasibility}
 

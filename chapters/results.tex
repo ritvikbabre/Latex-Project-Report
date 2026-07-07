@@ -1,2 +1,38 @@
-\chapter{Results}{\label{ch:results}}
+\chapter{Results}
+\label{ch:results}
 
+\section{Overview}
+This chapter presents preliminary evaluation results from testing conducted during DriveXR's development. Results are drawn from informal test sessions involving the supervising faculty member and additional volunteer participants. As noted in Chapter~\ref{ch:methodology}, a formal structured user study using standardised instruments is planned as near-term future work; the observations presented here are qualitative and observational in nature.
+
+\section{Hardware Fidelity Evaluation}
+
+\subsection{Racing Wheel Comparison}
+The Logitech G29 was evaluated directly against the Nitho Drive Pro One used during earlier development. All testers who used both units rated the G29 as substantially more realistic. The two most frequently cited factors were the G29's 900° steering rotation, which matches real vehicle steering behaviour, and the larger physical wheel diameter, which more closely approximates an actual vehicle's steering wheel.
+
+\subsection{Pedal Configuration}
+Pedal identification while wearing the headset was a specific concern raised early in testing. With the Nitho unit, testers — particularly those attempting the simulator for the first time — struggled to distinguish the accelerator from the brake pedal by feel alone, since neither pedal is visible while the headset is worn. An interim mitigation was tested in which the clutch pedal (positioned further from the accelerator) was remapped to serve as the brake, increasing the physical separation between the two pedals used for driving. Following the switch to the G29, whose pedal spacing is substantially greater than the Nitho's, this remapping was found unnecessary and the standard accelerator/brake pedal assignment was restored without reintroducing the identification problem.
+
+\section{VR Comfort and Simulator Sickness}
+
+Simulator sickness was observed in several testers with no prior VR experience, most commonly manifesting as mild nausea during vehicle acceleration and turning manoeuvres. This is consistent with established findings that visual-vestibular mismatch is a primary driver of VR-induced discomfort in driving simulation contexts. Notably, symptom severity reduced substantially across repeated sessions — testers who reported discomfort in their first session generally reported markedly reduced or absent symptoms by their second or third session, suggesting an adaptation effect consistent with prior literature on VR acclimatisation.
+
+The in-cockpit view was rated as comfortable during normal driving by all testers. Two related issues were identified concerning the VR camera rig's interaction with the Meta Quest 3's room-scale tracking system:
+
+\begin{enumerate}
+    \item \textbf{Height calibration.} The Quest 3 establishes its tracking origin based on the physical floor position at headset startup. Testers of different physical heights therefore experienced the virtual driver seat at different vertical positions relative to the physical cockpit geometry, with taller participants generally reporting that the seat position felt low relative to the steering wheel.
+    \item \textbf{Positional drift.} Because the Quest 3 uses room-scale positional tracking, testers who physically shifted position while seated could cause the tracked camera origin to move outside the bounds of the vehicle mesh, producing a view from outside or above the car. This was addressed during development with a camera-locking mechanism that ties the XR camera's position to a fixed offset relative to the vehicle body rather than the physical room, eliminating positional drift while preserving head rotation tracking.
+\end{enumerate}
+
+\section{NPC Traffic System Evaluation}
+
+The redesigned NPC traffic controller (Section~\ref{ch:methodology}) was evaluated qualitatively following its implementation. Vehicle navigation performed reliably on straight road segments, with vehicles consistently reaching checkpoints and maintaining appropriate following distances from the vehicle ahead. 
+
+Sharp turns at city intersections remained an area of weaker performance: the steering angle clamp necessary to prevent wheel-spinning-in-place behaviour occasionally proved insufficient for tight intersection turning radii, resulting in vehicles temporarily struggling to complete turns. Intersection deadlocks, while substantially reduced from the earlier implementation through the introduction of explicit yield-priority logic based on vehicle instance ordering, were not fully eliminated at high vehicle density, with simultaneous arrivals at opposing intersection approaches occasionally producing extended mutual blocking. These findings are consistent with the broader literature identifying dense urban NPC traffic simulation as an open research problem, and are treated in this report as an identified limitation for continued refinement rather than a solved component of the system.
+
+\section{System Performance}
+
+The PC-hosted architecture via Meta Quest Link achieved stable rendering at the Meta Quest 3's native 72 Hz refresh rate across all three training environments during test sessions, with no observed frame rate degradation with up to ten concurrent NPC vehicles active simultaneously in the city environment. The rear-view and side-mirror rendering system, which uses dedicated off-screen cameras throttled to 20 updates per second to manage GPU load, operated without perceptible latency to testers.
+
+\section{Summary}
+
+Preliminary testing confirms several of the project's underlying assumptions: that physical hardware fidelity — particularly steering rotation range and pedal spacing — has a measurable effect on perceived realism, and that VR-based driving simulation is broadly comfortable for use once initial simulator sickness adaptation has occurred. Testing also surfaced concrete engineering challenges requiring further attention, most significantly headset height calibration for users of varying stature and NPC traffic behaviour at high intersection density. These findings directly inform the future work items discussed in Chapter~\ref{ch:conclusion}.

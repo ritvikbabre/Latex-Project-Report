@@ -1,0 +1,1012 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{Abdurrahman2021}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=8bc1f7888d07f22cc29bc496c0595287}{%
+           family={Abdurrahman},
+           familyi={A\bibinitperiod},
+           given={Usman\bibnamedelima A.},
+           giveni={U\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=5b697d0e24b49bfffa807321c79e5883}{%
+           family={Yeh},
+           familyi={Y\bibinitperiod},
+           given={Shih-Ching},
+           giveni={S\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=df47b3ab47563764672228673a2bd7d0}{%
+           family={Wong},
+           familyi={W\bibinitperiod},
+           given={Yunying},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=b0e1dc7d2e37982d6fbf4edaa0ce6e6b}{%
+           family={Wei},
+           familyi={W\bibinitperiod},
+           given={Liang},
+           giveni={L\bibinitperiod}}}%
+      }
+      \strng{namehash}{4cc0ad8b7cc65a6774ba9d46ddcee0e1}
+      \strng{fullhash}{7a34a6e5f994ab3d775468ae7c0020ac}
+      \strng{fullhashraw}{7a34a6e5f994ab3d775468ae7c0020ac}
+      \strng{bibnamehash}{4cc0ad8b7cc65a6774ba9d46ddcee0e1}
+      \strng{authorbibnamehash}{4cc0ad8b7cc65a6774ba9d46ddcee0e1}
+      \strng{authornamehash}{4cc0ad8b7cc65a6774ba9d46ddcee0e1}
+      \strng{authorfullhash}{7a34a6e5f994ab3d775468ae7c0020ac}
+      \strng{authorfullhashraw}{7a34a6e5f994ab3d775468ae7c0020ac}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Virtual Reality}
+      \field{title}{Effects of Neuro-Cognitive Load on Learning Transfer Using a VR-Based Driving System}
+      \field{year}{2021}
+    \endentry
+    \entry{Chang2020}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=efbcae2a75f716c8741a24f19134650d}{%
+           family={Chang},
+           familyi={C\bibinitperiod},
+           given={Wen-Te},
+           giveni={W\bibinithyphendelim T\bibinitperiod}}}%
+      }
+      \strng{namehash}{efbcae2a75f716c8741a24f19134650d}
+      \strng{fullhash}{efbcae2a75f716c8741a24f19134650d}
+      \strng{fullhashraw}{efbcae2a75f716c8741a24f19134650d}
+      \strng{bibnamehash}{efbcae2a75f716c8741a24f19134650d}
+      \strng{authorbibnamehash}{efbcae2a75f716c8741a24f19134650d}
+      \strng{authornamehash}{efbcae2a75f716c8741a24f19134650d}
+      \strng{authorfullhash}{efbcae2a75f716c8741a24f19134650d}
+      \strng{authorfullhashraw}{efbcae2a75f716c8741a24f19134650d}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part F: Traffic Psychology and Behaviour}
+      \field{title}{The Effects of Age, Gender, and Control Device in a Virtual Reality Driving Simulation}
+      \field{year}{2020}
+    \endentry
+    \entry{Chung2022}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=bbec940309a0c99d51b10c1258d87a0e}{%
+           family={Chung},
+           familyi={C\bibinitperiod},
+           given={Jiyong},
+           giveni={J\bibinitperiod}}}%
+        {{hash=6f0174cdb14830a6180adde811421fb6}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Hyeokmin},
+           giveni={H\bibinitperiod}}}%
+        {{hash=3ccfe70798a02bce840501206fbe3120}{%
+           family={Moon},
+           familyi={M\bibinitperiod},
+           given={Hosang},
+           giveni={H\bibinitperiod}}}%
+        {{hash=96219b3eb91ec9862c30d6cc740e71d2}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Eunghyuk},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{2ea945c65d7f374a1a33ab32116b8cb0}
+      \strng{fullhash}{9924d3371433d68e897aaf46c525bfd8}
+      \strng{fullhashraw}{9924d3371433d68e897aaf46c525bfd8}
+      \strng{bibnamehash}{2ea945c65d7f374a1a33ab32116b8cb0}
+      \strng{authorbibnamehash}{2ea945c65d7f374a1a33ab32116b8cb0}
+      \strng{authornamehash}{2ea945c65d7f374a1a33ab32116b8cb0}
+      \strng{authorfullhash}{9924d3371433d68e897aaf46c525bfd8}
+      \strng{authorfullhashraw}{9924d3371433d68e897aaf46c525bfd8}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Applied Sciences}
+      \field{title}{The Static and Dynamic Analyses of Drivers' Gaze Movement Using VR Driving Simulator}
+      \field{year}{2022}
+    \endentry
+    \entry{Harari2021}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=65567f9a961ee7353691fe716857d995}{%
+           family={Ebnali\bibnamedelima Harari},
+           familyi={E\bibinitperiod\bibinitdelim H\bibinitperiod},
+           given={Rayan},
+           giveni={R\bibinitperiod}}}%
+        {{hash=98f3be138c46b56d1f8bd4e7dec95dc1}{%
+           family={Lamb},
+           familyi={L\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+        {{hash=754fda365edbed2bd11305688edc0c84}{%
+           family={Fathi},
+           familyi={F\bibinitperiod},
+           given={Razieh},
+           giveni={R\bibinitperiod}}}%
+        {{hash=a00037e26b46dc8fc9ffff502c8ad56f}{%
+           family={Hulme},
+           familyi={H\bibinitperiod},
+           given={Kevin},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{62e01573a89ab4c77ba9142075f83d19}
+      \strng{fullhash}{cf4c956f6dce703a3a444e12895b800d}
+      \strng{fullhashraw}{cf4c956f6dce703a3a444e12895b800d}
+      \strng{bibnamehash}{62e01573a89ab4c77ba9142075f83d19}
+      \strng{authorbibnamehash}{62e01573a89ab4c77ba9142075f83d19}
+      \strng{authornamehash}{62e01573a89ab4c77ba9142075f83d19}
+      \strng{authorfullhash}{cf4c956f6dce703a3a444e12895b800d}
+      \strng{authorfullhashraw}{cf4c956f6dce703a3a444e12895b800d}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of …}
+      \field{title}{Virtual Reality Tour for First-Time Users of Highly Automated Cars: Comparing the Effects of Virtual Environments with Different Levels of Interaction Fidelity}
+      \field{year}{2021}
+      \verb{doi}
+      \verb 10.3389/fpsyg.2021.628484
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.3389/fpsyg.2021.628484
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.3389/fpsyg.2021.628484
+      \endverb
+    \endentry
+    \entry{GilCarvajal2024}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=47929de4715310c909e911e89b04a9ed}{%
+           family={Gil-Carvajal},
+           familyi={G\bibinithyphendelim C\bibinitperiod},
+           given={Juan\bibnamedelima Camilo},
+           giveni={J\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=c1c695893f8aec9ee860c9bf6dabbe55}{%
+           family={Jo},
+           familyi={J\bibinitperiod},
+           given={Eun\bibnamedelima Soo},
+           giveni={E\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=c9d304a22ca99fc51181b1f612c9c977}{%
+           family={Park},
+           familyi={P\bibinitperiod},
+           given={Dong\bibnamedelima Chul},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=1e98e13c84b45e2b48963d42b33af7b3}{%
+           family={Song},
+           familyi={S\bibinitperiod},
+           given={Wookeun},
+           giveni={W\bibinitperiod}}}%
+        {{hash=6709cc87e2218370aa38fd2b0f158d61}{%
+           family={Jeong},
+           familyi={J\bibinitperiod},
+           given={Cheol-Ho},
+           giveni={C\bibinithyphendelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{610b714260b097f77cdbf8e0e90b7bbb}
+      \strng{fullhash}{0711902cee880aadfca9ff70bc52abeb}
+      \strng{fullhashraw}{0711902cee880aadfca9ff70bc52abeb}
+      \strng{bibnamehash}{610b714260b097f77cdbf8e0e90b7bbb}
+      \strng{authorbibnamehash}{610b714260b097f77cdbf8e0e90b7bbb}
+      \strng{authornamehash}{610b714260b097f77cdbf8e0e90b7bbb}
+      \strng{authorfullhash}{0711902cee880aadfca9ff70bc52abeb}
+      \strng{authorfullhashraw}{0711902cee880aadfca9ff70bc52abeb}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Applied Sciences}
+      \field{title}{Driving Simulator Using Virtual Reality Tools Combining Sound, Vision, Vibration, and Motion}
+      \field{year}{2024}
+    \endentry
+    \entry{Goedicke2022}{inproceedings}{}{}
+      \name{author}{6}{}{%
+        {{hash=005b42a83c1afc6098d4aecd4a0f9e1c}{%
+           family={Goedicke},
+           familyi={G\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=67cc82cb7f4877094e2d83957d8f41ee}{%
+           family={Haraldsson},
+           familyi={H\bibinitperiod},
+           given={Harald},
+           giveni={H\bibinitperiod}}}%
+        {{hash=d1ac186eb0be5528db7208f47e1e4d79}{%
+           family={Klein},
+           familyi={K\bibinitperiod},
+           given={Navit},
+           giveni={N\bibinitperiod}}}%
+        {{hash=c08919efa61a11843903d82858c587e6}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Lunshi},
+           giveni={L\bibinitperiod}}}%
+        {{hash=bc6e091e70b606023cba6b5a927505b2}{%
+           family={Parush},
+           familyi={P\bibinitperiod},
+           given={Avi},
+           giveni={A\bibinitperiod}}}%
+        {{hash=e4a42f6212d7fd6bd5592010271229c0}{%
+           family={Ju},
+           familyi={J\bibinitperiod},
+           given={Wendy},
+           giveni={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{bff166feddda2af9d94fc211e86e1381}
+      \strng{fullhash}{efafb76791a4312b081e5bcdf3db419c}
+      \strng{fullhashraw}{efafb76791a4312b081e5bcdf3db419c}
+      \strng{bibnamehash}{bff166feddda2af9d94fc211e86e1381}
+      \strng{authorbibnamehash}{bff166feddda2af9d94fc211e86e1381}
+      \strng{authornamehash}{bff166feddda2af9d94fc211e86e1381}
+      \strng{authorfullhash}{efafb76791a4312b081e5bcdf3db419c}
+      \strng{authorfullhashraw}{efafb76791a4312b081e5bcdf3db419c}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2022 CHI Conference on Human Factors in Computing Systems}
+      \field{title}{Rerun: Enabling Multi-Perspective Analysis of Driving Interaction in VR}
+      \field{year}{2022}
+    \endentry
+    \entry{Hartfiel2019}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=1486eef41f3c86ad9f060795a1eda967}{%
+           family={Hartfiel},
+           familyi={H\bibinitperiod},
+           given={Bert},
+           giveni={B\bibinitperiod}}}%
+        {{hash=ceb320312d5d4359b3ad6c7a266b331f}{%
+           family={Kroys},
+           familyi={K\bibinitperiod},
+           given={Alexander},
+           giveni={A\bibinitperiod}}}%
+        {{hash=2365fa20a6857adabe8324d171751fcf}{%
+           family={Kruithof},
+           familyi={K\bibinitperiod},
+           given={Nico},
+           giveni={N\bibinitperiod}}}%
+        {{hash=bf61f6313828950394e1f55900234929}{%
+           family={Stark},
+           familyi={S\bibinitperiod},
+           given={Rainer},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{a9cd381f5de3b43ff7b894b0ab856db5}
+      \strng{fullhash}{5f753f17e162cfeb95840c0597d7858b}
+      \strng{fullhashraw}{5f753f17e162cfeb95840c0597d7858b}
+      \strng{bibnamehash}{a9cd381f5de3b43ff7b894b0ab856db5}
+      \strng{authorbibnamehash}{a9cd381f5de3b43ff7b894b0ab856db5}
+      \strng{authornamehash}{a9cd381f5de3b43ff7b894b0ab856db5}
+      \strng{authorfullhash}{5f753f17e162cfeb95840c0597d7858b}
+      \strng{authorfullhashraw}{5f753f17e162cfeb95840c0597d7858b}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2019 IEEE Conference on Virtual Reality and 3D User Interfaces (VR)}
+      \field{title}{Driving Simulator with VR Glasses for Evaluation of New Interior Concepts}
+      \field{year}{2019}
+    \endentry
+    \entry{He2022}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=4b41cbc7890e3c5bcf0cbbd951a220ad}{%
+           family={He},
+           familyi={H\bibinitperiod},
+           given={Chenxi},
+           giveni={C\bibinitperiod}}}%
+        {{hash=9a73943d4efc5a09f53ff16badf176d4}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Yiping},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=e09976ac3d7709fc7b37cc10bca80b81}{%
+           family={Zhao},
+           familyi={Z\bibinitperiod},
+           given={Xiaohua},
+           giveni={X\bibinitperiod}}}%
+        {{hash=f87e3bdb16d75ba7982c9e808c2d103a}{%
+           family={Ding},
+           familyi={D\bibinitperiod},
+           given={Yang},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=72f831685ec758790c27d3252094c2e6}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Shuo},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{76a9037a0d910766d1bed1135cfeabb9}
+      \strng{fullhash}{f9d77f19df209ac6bc4a385c606e3b2d}
+      \strng{fullhashraw}{f9d77f19df209ac6bc4a385c606e3b2d}
+      \strng{bibnamehash}{76a9037a0d910766d1bed1135cfeabb9}
+      \strng{authorbibnamehash}{76a9037a0d910766d1bed1135cfeabb9}
+      \strng{authornamehash}{76a9037a0d910766d1bed1135cfeabb9}
+      \strng{authorfullhash}{f9d77f19df209ac6bc4a385c606e3b2d}
+      \strng{authorfullhashraw}{f9d77f19df209ac6bc4a385c606e3b2d}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Advanced Transportation}
+      \field{title}{Evaluation of the Training Effect of the Driving Simulator + VR on Driving School Trainees}
+      \field{year}{2022}
+    \endentry
+    \entry{Hwang2020}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=916a27a5c60ea2dea5f08b5cdb72ccc2}{%
+           family={Hwang},
+           familyi={H\bibinitperiod},
+           given={Sooncheon},
+           giveni={S\bibinitperiod}}}%
+        {{hash=7450be2c2db7c2371572100241c6475b}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Sunhoon},
+           giveni={S\bibinitperiod}}}%
+        {{hash=577726736e30cccab931ec652e107fd3}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Dongmin},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{ec4c250b291d019f85594185747f6628}
+      \strng{fullhash}{ec4c250b291d019f85594185747f6628}
+      \strng{fullhashraw}{ec4c250b291d019f85594185747f6628}
+      \strng{bibnamehash}{ec4c250b291d019f85594185747f6628}
+      \strng{authorbibnamehash}{ec4c250b291d019f85594185747f6628}
+      \strng{authornamehash}{ec4c250b291d019f85594185747f6628}
+      \strng{authorfullhash}{ec4c250b291d019f85594185747f6628}
+      \strng{authorfullhashraw}{ec4c250b291d019f85594185747f6628}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of …}
+      \field{title}{Driving Performance Evaluation Correlated to Age and Visual Acuities Based on VR Technologies}
+      \field{year}{2020}
+      \verb{doi}
+      \verb 10.3390/s20143924
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.3390/s20143924
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.3390/s20143924
+      \endverb
+    \endentry
+    \entry{Ju2024}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=ec481aefe4330e0bfa0a3572cddc2de0}{%
+           family={Ju},
+           familyi={J\bibinitperiod},
+           given={Uijong},
+           giveni={U\bibinitperiod}}}%
+        {{hash=950bd18727de78b57dc531631943ebc8}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Sanghyeon},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{cb4b1d12065e3d683fa106cc3b42a8ab}
+      \strng{fullhash}{cb4b1d12065e3d683fa106cc3b42a8ab}
+      \strng{fullhashraw}{cb4b1d12065e3d683fa106cc3b42a8ab}
+      \strng{bibnamehash}{cb4b1d12065e3d683fa106cc3b42a8ab}
+      \strng{authorbibnamehash}{cb4b1d12065e3d683fa106cc3b42a8ab}
+      \strng{authornamehash}{cb4b1d12065e3d683fa106cc3b42a8ab}
+      \strng{authorfullhash}{cb4b1d12065e3d683fa106cc3b42a8ab}
+      \strng{authorfullhashraw}{cb4b1d12065e3d683fa106cc3b42a8ab}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Virtual Reality}
+      \field{title}{Predicting Perceived Realism in Virtual Reality Driving Simulations Using Participants' Personality Traits, Heart Rate Changes, and Risk Preference}
+      \field{year}{2024}
+    \endentry
+    \entry{Jurik2021}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=c2f7e0975fa1342b35a108da89ed9194}{%
+           family={Juřík},
+           familyi={J\bibinitperiod},
+           given={Vojtěch},
+           giveni={V\bibinitperiod}}}%
+        {{hash=30d1e9f062cf43f92420faea74915bf8}{%
+           family={Linkov},
+           familyi={L\bibinitperiod},
+           given={Václav},
+           giveni={V\bibinitperiod}}}%
+        {{hash=65e24828acb2ca238df8a72d42671fcb}{%
+           family={Dečký},
+           familyi={D\bibinitperiod},
+           given={Petr},
+           giveni={P\bibinitperiod}}}%
+        {{hash=a1b908083d2bffae952f116488b69903}{%
+           family={Klečková},
+           familyi={K\bibinitperiod},
+           given={Sára},
+           giveni={S\bibinitperiod}}}%
+        {{hash=2262c8c7445ba2d8d0b1f1bcf06f8342}{%
+           family={Chvojková},
+           familyi={C\bibinitperiod},
+           given={Edita},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{2633b4924ee26b6dc806334bd20de59a}
+      \strng{fullhash}{79969a0f5c75a692815780fcc6f65fae}
+      \strng{fullhashraw}{79969a0f5c75a692815780fcc6f65fae}
+      \strng{bibnamehash}{2633b4924ee26b6dc806334bd20de59a}
+      \strng{authorbibnamehash}{2633b4924ee26b6dc806334bd20de59a}
+      \strng{authornamehash}{2633b4924ee26b6dc806334bd20de59a}
+      \strng{authorfullhash}{79969a0f5c75a692815780fcc6f65fae}
+      \strng{authorfullhashraw}{79969a0f5c75a692815780fcc6f65fae}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transportation Research Part F: Traffic Psychology and Behaviour}
+      \field{title}{HMD-Based VR Tool for Traffic Psychological Examination: Conceptualization and Design Proposition}
+      \field{year}{2021}
+    \endentry
+    \entry{Lindal2019}{inproceedings}{}{}
+      \name{author}{7}{}{%
+        {{hash=a74161e2acd5fdc955889c24393dcaac}{%
+           family={Líndal},
+           familyi={L\bibinitperiod},
+           given={Páll\bibnamedelima J.},
+           giveni={P\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=eeb86fd0750b67338d80311c8f75d371}{%
+           family={Jóhannsdóttir},
+           familyi={J\bibinitperiod},
+           given={Kamilla\bibnamedelima Rún},
+           giveni={K\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=ac108750a092360a89b29f6af1897208}{%
+           family={Kristjánsson},
+           familyi={K\bibinitperiod},
+           given={Unnar},
+           giveni={U\bibinitperiod}}}%
+        {{hash=50d623e4a556388933833934253a2dd2}{%
+           family={Lensing},
+           familyi={L\bibinitperiod},
+           given={Nina},
+           giveni={N\bibinitperiod}}}%
+        {{hash=778796b15d7689d106e0935b39da7815}{%
+           family={Stühmeier},
+           familyi={S\bibinitperiod},
+           given={Anna},
+           giveni={A\bibinitperiod}}}%
+        {{hash=8c53cef2df218332ee1d73fbfced3418}{%
+           family={Wohlan},
+           familyi={W\bibinitperiod},
+           given={Annika},
+           giveni={A\bibinitperiod}}}%
+        {{hash=537f375ed55e5f5ccc2fdb558c9cc675}{%
+           family={Vilhjálmsson},
+           familyi={V\bibinitperiod},
+           given={Hannes\bibnamedelima H.},
+           giveni={H\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{2911f33a694bba100d9d26b61d705d67}
+      \strng{fullhash}{55a2c02ca236e639f9799dcc4e706c56}
+      \strng{fullhashraw}{55a2c02ca236e639f9799dcc4e706c56}
+      \strng{bibnamehash}{2911f33a694bba100d9d26b61d705d67}
+      \strng{authorbibnamehash}{2911f33a694bba100d9d26b61d705d67}
+      \strng{authornamehash}{2911f33a694bba100d9d26b61d705d67}
+      \strng{authorfullhash}{55a2c02ca236e639f9799dcc4e706c56}
+      \strng{authorfullhashraw}{55a2c02ca236e639f9799dcc4e706c56}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2019 CHI Conference on Human Factors in Computing Systems}
+      \field{title}{Comparison of Teleportation and Fixed-Track Driving in VR}
+      \field{year}{2019}
+    \endentry
+    \entry{Muguro2023}{inproceedings}{}{}
+      \name{author}{6}{}{%
+        {{hash=33b46b4f68176e55d32ac386305a145a}{%
+           family={Muguro},
+           familyi={M\bibinitperiod},
+           given={Joseph},
+           giveni={J\bibinitperiod}}}%
+        {{hash=6c00a47539b4cb084919cf9c4909154d}{%
+           family={Laksono},
+           familyi={L\bibinitperiod},
+           given={Pringgo\bibnamedelima Widyo},
+           giveni={P\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=3b07ed90f01778977854ccb428c6cf8b}{%
+           family={Sasatake},
+           familyi={S\bibinitperiod},
+           given={Yuta},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=e901d7a30da3d2263480d34747691883}{%
+           family={Rusydi},
+           familyi={R\bibinitperiod},
+           given={Muhammad\bibnamedelima Ilhamdi},
+           giveni={M\bibinitperiod\bibinitdelim I\bibinitperiod}}}%
+        {{hash=59177dfc33a857b6a786ea398ed427ba}{%
+           family={Matsushita},
+           familyi={M\bibinitperiod},
+           given={Kojiro},
+           giveni={K\bibinitperiod}}}%
+        {{hash=1c4ef84d6b06d7a022f7da7424f39bae}{%
+           family={Sasaki},
+           familyi={S\bibinitperiod},
+           given={Minoru},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{d411be07a3803ef437c7a6d081ff5d9b}
+      \strng{fullhash}{e359f50b2bf1403ff14a5d83dd8f6cf1}
+      \strng{fullhashraw}{e359f50b2bf1403ff14a5d83dd8f6cf1}
+      \strng{bibnamehash}{d411be07a3803ef437c7a6d081ff5d9b}
+      \strng{authorbibnamehash}{d411be07a3803ef437c7a6d081ff5d9b}
+      \strng{authornamehash}{d411be07a3803ef437c7a6d081ff5d9b}
+      \strng{authorfullhash}{e359f50b2bf1403ff14a5d83dd8f6cf1}
+      \strng{authorfullhashraw}{e359f50b2bf1403ff14a5d83dd8f6cf1}
+      \field{extraname}{1}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of …}
+      \field{title}{Feasibility of AR-VR Use in Autonomous Cars for User Engagement and Its Effects on Posture and Vigilance During Transit}
+      \field{year}{2023}
+      \verb{doi}
+      \verb 10.5507/tots.2022.019
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.5507/tots.2022.019
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.5507/tots.2022.019
+      \endverb
+    \endentry
+    \entry{Muguro2021}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{hash=7f51d94f2cfb554cefc7e0084934ddca}{%
+           family={Muguro},
+           familyi={M\bibinitperiod},
+           given={Joseph\bibnamedelima K.},
+           giveni={J\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=6c00a47539b4cb084919cf9c4909154d}{%
+           family={Laksono},
+           familyi={L\bibinitperiod},
+           given={Pringgo\bibnamedelima Widyo},
+           giveni={P\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=3b07ed90f01778977854ccb428c6cf8b}{%
+           family={Sasatake},
+           familyi={S\bibinitperiod},
+           given={Yuta},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=59177dfc33a857b6a786ea398ed427ba}{%
+           family={Matsushita},
+           familyi={M\bibinitperiod},
+           given={Kojiro},
+           giveni={K\bibinitperiod}}}%
+        {{hash=1c4ef84d6b06d7a022f7da7424f39bae}{%
+           family={Sasaki},
+           familyi={S\bibinitperiod},
+           given={Minoru},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{0df7655b5d45197cecff7ebd4510fae1}
+      \strng{fullhash}{6f8b4ff7373966929067e3965eadb9a8}
+      \strng{fullhashraw}{6f8b4ff7373966929067e3965eadb9a8}
+      \strng{bibnamehash}{0df7655b5d45197cecff7ebd4510fae1}
+      \strng{authorbibnamehash}{0df7655b5d45197cecff7ebd4510fae1}
+      \strng{authornamehash}{0df7655b5d45197cecff7ebd4510fae1}
+      \strng{authorfullhash}{6f8b4ff7373966929067e3965eadb9a8}
+      \strng{authorfullhashraw}{6f8b4ff7373966929067e3965eadb9a8}
+      \field{extraname}{2}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2021 International Conference on Artificial Intelligence in Information and Communication (ICAIIC)}
+      \field{title}{User Monitoring in Autonomous Driving System Using Gamified Task: A Case for VR/AR In-Car Gaming}
+      \field{year}{2021}
+      \field{pages}{290\bibrangedash 295}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1109/ICAIIC51459.2021.9415233
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1109/ICAIIC51459.2021.9415233
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1109/ICAIIC51459.2021.9415233
+      \endverb
+    \endentry
+    \entry{Qadir2019}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=724b105aadc70874a320585566e4d9d0}{%
+           family={Qadir},
+           familyi={Q\bibinitperiod},
+           given={Zeeshan},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=bca80dbb0a67d42b3081faaffdceab62}{%
+           family={Chowdhury},
+           familyi={C\bibinitperiod},
+           given={Eashita},
+           giveni={E\bibinitperiod}}}%
+        {{hash=10230e27c2216bdd6dd75358534dca34}{%
+           family={Ghosh},
+           familyi={G\bibinitperiod},
+           given={Lidia},
+           giveni={L\bibinitperiod}}}%
+        {{hash=eb424f79c37d96fc42b0348087bff3cf}{%
+           family={Konar},
+           familyi={K\bibinitperiod},
+           given={Amit},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{19c903901ecab7340a47b3fc9074c683}
+      \strng{fullhash}{e374189df2832bbbe82e04650715e1d6}
+      \strng{fullhashraw}{e374189df2832bbbe82e04650715e1d6}
+      \strng{bibnamehash}{19c903901ecab7340a47b3fc9074c683}
+      \strng{authorbibnamehash}{19c903901ecab7340a47b3fc9074c683}
+      \strng{authornamehash}{19c903901ecab7340a47b3fc9074c683}
+      \strng{authorfullhash}{e374189df2832bbbe82e04650715e1d6}
+      \strng{authorfullhashraw}{e374189df2832bbbe82e04650715e1d6}
+      \field{sortinit}{Q}
+      \field{sortinithash}{ce69a400a872ddd02ee7fdb3b38c6abd}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2019 International Conference on Electrical, Computer and Communication Engineering (ECCE)}
+      \field{title}{Quantitative Analysis of Cognitive Load Test While Driving in a VR vs Non-VR Environment}
+      \field{year}{2019}
+    \endentry
+    \entry{Schultheis2005}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=b32c93b9a7803ce127e0a0d374633e5f}{%
+           family={Schultheis},
+           familyi={S\bibinitperiod},
+           given={Maria\bibnamedelima T.},
+           giveni={M\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+        {{hash=b5076043d5dec9305c321f766531d93a}{%
+           family={Simone},
+           familyi={S\bibinitperiod},
+           given={Lisa\bibnamedelima K.},
+           giveni={L\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=7c16436772dc1f2823d28523d42acc87}{%
+           family={Roseman},
+           familyi={R\bibinitperiod},
+           given={Emily},
+           giveni={E\bibinitperiod}}}%
+        {{hash=7e9ccda2047c75c43db7de37a9013ef6}{%
+           family={Nead},
+           familyi={N\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+        {{hash=d01a25610d250ec26729b52afb5f2c9a}{%
+           family={Rebimbas},
+           familyi={R\bibinitperiod},
+           given={Jose},
+           giveni={J\bibinitperiod}}}%
+        {{hash=a3a5db9e8eb1ca06fb25f0ebb8058157}{%
+           family={Mourant},
+           familyi={M\bibinitperiod},
+           given={Ronald},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{1b28939b04c80ee0001f6f449156a0a7}
+      \strng{fullhash}{7be450eb7941b8d167479c49def16b0e}
+      \strng{fullhashraw}{7be450eb7941b8d167479c49def16b0e}
+      \strng{bibnamehash}{1b28939b04c80ee0001f6f449156a0a7}
+      \strng{authorbibnamehash}{1b28939b04c80ee0001f6f449156a0a7}
+      \strng{authornamehash}{1b28939b04c80ee0001f6f449156a0a7}
+      \strng{authorfullhash}{7be450eb7941b8d167479c49def16b0e}
+      \strng{authorfullhashraw}{7be450eb7941b8d167479c49def16b0e}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Clinical Neuropsychologist}
+      \field{title}{Stopping Behavior in a VR Driving Simulator: A New Clinical Measure for the Assessment of Driving}
+      \field{year}{2005}
+    \endentry
+    \entry{Silvera2022}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=d5ceed60958afee8b8dfeeea55e08a40}{%
+           family={Silvera},
+           familyi={S\bibinitperiod},
+           given={Gustavo},
+           giveni={G\bibinitperiod}}}%
+        {{hash=5fd0240f52a46da2ea277694f99a5044}{%
+           family={Biswas},
+           familyi={B\bibinitperiod},
+           given={Abhijat},
+           giveni={A\bibinitperiod}}}%
+        {{hash=01898f7da4d873bf4041726b1334fa93}{%
+           family={Admoni},
+           familyi={A\bibinitperiod},
+           given={Henny},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{16b8a8857a3330426c6d273397fc4cc0}
+      \strng{fullhash}{16b8a8857a3330426c6d273397fc4cc0}
+      \strng{fullhashraw}{16b8a8857a3330426c6d273397fc4cc0}
+      \strng{bibnamehash}{16b8a8857a3330426c6d273397fc4cc0}
+      \strng{authorbibnamehash}{16b8a8857a3330426c6d273397fc4cc0}
+      \strng{authornamehash}{16b8a8857a3330426c6d273397fc4cc0}
+      \strng{authorfullhash}{16b8a8857a3330426c6d273397fc4cc0}
+      \strng{authorfullhashraw}{16b8a8857a3330426c6d273397fc4cc0}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2022 ACM/IEEE International Conference on Human-Robot Interaction}
+      \field{title}{DReyeVR: Democratizing Virtual Reality Driving Simulation for Behavioural \& Interaction Research}
+      \field{year}{2022}
+    \endentry
+    \entry{Trofimova2021}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=14005fcc92dc9c6e0d1c1069554a75b8}{%
+           family={Trofimova},
+           familyi={T\bibinitperiod},
+           given={Ekaterina},
+           giveni={E\bibinitperiod}}}%
+        {{hash=2c87e9d5c253c9a44736654ff781ce51}{%
+           family={Koch},
+           familyi={K\bibinitperiod},
+           given={Timo},
+           giveni={T\bibinitperiod}}}%
+        {{hash=e2d1e0dea4ec2689968281047badb2d2}{%
+           family={Ludwig},
+           familyi={L\bibinitperiod},
+           given={Thomas},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{6e0654700e5b269db7c7186f099ee258}
+      \strng{fullhash}{6e0654700e5b269db7c7186f099ee258}
+      \strng{fullhashraw}{6e0654700e5b269db7c7186f099ee258}
+      \strng{bibnamehash}{6e0654700e5b269db7c7186f099ee258}
+      \strng{authorbibnamehash}{6e0654700e5b269db7c7186f099ee258}
+      \strng{authornamehash}{6e0654700e5b269db7c7186f099ee258}
+      \strng{authorfullhash}{6e0654700e5b269db7c7186f099ee258}
+      \strng{authorfullhashraw}{6e0654700e5b269db7c7186f099ee258}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Safety}
+      \field{title}{Electrogastrography in Autonomous Vehicles—An Objective Method for Assessment of Motion Sickness in Simulated Driving Environments}
+      \field{year}{2021}
+    \endentry
+    \entry{Walch2017}{inproceedings}{}{}
+      \name{author}{7}{}{%
+        {{hash=a6f8edd4c2620262986fd43249eff173}{%
+           family={Walch},
+           familyi={W\bibinitperiod},
+           given={Marcel},
+           giveni={M\bibinitperiod}}}%
+        {{hash=f6df25997f58a771f32921d423648988}{%
+           family={Hock},
+           familyi={H\bibinitperiod},
+           given={Philipp},
+           giveni={P\bibinitperiod}}}%
+        {{hash=05ab87b2595bc64aa84c5da1db7210dd}{%
+           family={Frommel},
+           familyi={F\bibinitperiod},
+           given={Julian},
+           giveni={J\bibinitperiod}}}%
+        {{hash=9d5f0b6c76b40d914d71b95bd13cda86}{%
+           family={Dobbelstein},
+           familyi={D\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=1c99dd3df3346ec17202b289deee6bab}{%
+           family={Rogers},
+           familyi={R\bibinitperiod},
+           given={Katja},
+           giveni={K\bibinitperiod}}}%
+        {{hash=e9659ef13f1f7bd1fe161b20f30aaefd}{%
+           family={Weber},
+           familyi={W\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+        {{hash=3534051f60259d006efbd4319e011ee3}{%
+           family={Schüssel},
+           familyi={S\bibinitperiod},
+           given={Felix},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{a94469ce8f45053113c73fd5888a7bf8}
+      \strng{fullhash}{e77061a6798a632e380a23464090d95d}
+      \strng{fullhashraw}{e77061a6798a632e380a23464090d95d}
+      \strng{bibnamehash}{a94469ce8f45053113c73fd5888a7bf8}
+      \strng{authorbibnamehash}{a94469ce8f45053113c73fd5888a7bf8}
+      \strng{authornamehash}{a94469ce8f45053113c73fd5888a7bf8}
+      \strng{authorfullhash}{e77061a6798a632e380a23464090d95d}
+      \strng{authorfullhashraw}{e77061a6798a632e380a23464090d95d}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2017 CHI Conference on Human Factors in Computing Systems}
+      \field{title}{Evaluating VR Driving Simulation from a Player Experience Perspective}
+      \field{year}{2017}
+    \endentry
+    \entry{Weidner2017}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=7745ad4e7f74bddc90207643e8d65b03}{%
+           family={Weidner},
+           familyi={W\bibinitperiod},
+           given={Florian},
+           giveni={F\bibinitperiod}}}%
+        {{hash=ccb1131dbbc78ec9cf3923bcba822647}{%
+           family={Hoesch},
+           familyi={H\bibinitperiod},
+           given={Anne},
+           giveni={A\bibinitperiod}}}%
+        {{hash=88bf6a2c9af7aaf31045342a62d6b8b6}{%
+           family={Poeschl},
+           familyi={P\bibinitperiod},
+           given={Sandra},
+           giveni={S\bibinitperiod}}}%
+        {{hash=d1213355904537623e55c22e5033c88e}{%
+           family={Broll},
+           familyi={B\bibinitperiod},
+           given={Wolfgang},
+           giveni={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{7d342fb6f4a554a4f3016ef75f286ec6}
+      \strng{fullhash}{2473a58d9d556fb5ad7483cb8229c080}
+      \strng{fullhashraw}{2473a58d9d556fb5ad7483cb8229c080}
+      \strng{bibnamehash}{7d342fb6f4a554a4f3016ef75f286ec6}
+      \strng{authorbibnamehash}{7d342fb6f4a554a4f3016ef75f286ec6}
+      \strng{authornamehash}{7d342fb6f4a554a4f3016ef75f286ec6}
+      \strng{authorfullhash}{2473a58d9d556fb5ad7483cb8229c080}
+      \strng{authorfullhashraw}{2473a58d9d556fb5ad7483cb8229c080}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2017 IEEE Virtual Reality (VR)}
+      \field{title}{Comparing VR and Non-VR Driving Simulations: An Experimental User Study}
+      \field{year}{2017}
+    \endentry
+    \entry{Xu2022}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=05cfd0bcb3bc857f515fc6e69d6ca277}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Zheng},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=74ced4c7c91a5a73eb1e9cefaa5961d1}{%
+           family={Fang},
+           familyi={F\bibinitperiod},
+           given={Yihai},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=1ff7808c20697070a56a67174ce26b2a}{%
+           family={Zheng},
+           familyi={Z\bibinitperiod},
+           given={Nan},
+           giveni={N\bibinitperiod}}}%
+        {{hash=04998ac3b06a6bbaf6bba8ac32d35a6c}{%
+           family={Vu},
+           familyi={V\bibinitperiod},
+           given={Hai\bibnamedelima L.},
+           giveni={H\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+      }
+      \strng{namehash}{a97786026cc99df88fefe78b7a0b2119}
+      \strng{fullhash}{82a7e11528e08f4f6bd74f6292abc718}
+      \strng{fullhashraw}{82a7e11528e08f4f6bd74f6292abc718}
+      \strng{bibnamehash}{a97786026cc99df88fefe78b7a0b2119}
+      \strng{authorbibnamehash}{a97786026cc99df88fefe78b7a0b2119}
+      \strng{authornamehash}{a97786026cc99df88fefe78b7a0b2119}
+      \strng{authorfullhash}{82a7e11528e08f4f6bd74f6292abc718}
+      \strng{authorfullhashraw}{82a7e11528e08f4f6bd74f6292abc718}
+      \field{sortinit}{X}
+      \field{sortinithash}{1965c258adceecf23ce3d67b05113442}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Intelligent Transportation Systems}
+      \field{title}{Analyzing the Inconsistency in Driving Patterns Between Manual and Autonomous Modes Under Complex Driving Scenarios with a VR-Enabled Simulation Platform}
+      \field{year}{2022}
+    \endentry
+    \entry{Yao2020}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=a1049a01ea4b71fd045cb75cb577f203}{%
+           family={Yao},
+           familyi={Y\bibinitperiod},
+           given={Shouwen},
+           giveni={S\bibinitperiod}}}%
+        {{hash=16c4a3e90b157a72dd5117823b1e42d4}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Jiahao},
+           giveni={J\bibinitperiod}}}%
+        {{hash=b2eccb185095fccfeb40fdffd8b2105f}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yu},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{205881e90f5438ffc1758beaf0b270b7}
+      \strng{fullhash}{205881e90f5438ffc1758beaf0b270b7}
+      \strng{fullhashraw}{205881e90f5438ffc1758beaf0b270b7}
+      \strng{bibnamehash}{205881e90f5438ffc1758beaf0b270b7}
+      \strng{authorbibnamehash}{205881e90f5438ffc1758beaf0b270b7}
+      \strng{authornamehash}{205881e90f5438ffc1758beaf0b270b7}
+      \strng{authorfullhash}{205881e90f5438ffc1758beaf0b270b7}
+      \strng{authorfullhashraw}{205881e90f5438ffc1758beaf0b270b7}
+      \field{sortinit}{Y}
+      \field{sortinithash}{fd67ad5a9ef0f7456bdd9aab10fe1495}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Intelligent Transportation Systems}
+      \field{title}{VR-based Dataset for Autonomous-Driving System}
+      \field{year}{2020}
+    \endentry
+    \entry{Zhang2022}{article}{}{}
+      \name{author}{7}{}{%
+        {{hash=dab90d227b512e9cedb41532e46ba87a}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Chi},
+           giveni={C\bibinitperiod}}}%
+        {{hash=2938deb5048323c6e1bfdd80975d5b28}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Bo},
+           giveni={B\bibinitperiod}}}%
+        {{hash=12e1ca84eeceacf3769f089ded580c5a}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Yongchun},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=947f23330e31c25c99432470df4d9a2b}{%
+           family={Hou},
+           familyi={H\bibinitperiod},
+           given={Lei},
+           giveni={L\bibinitperiod}}}%
+        {{hash=c5f133678c8bdff0e050e19158f289ed}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Min},
+           giveni={M\bibinitperiod}}}%
+        {{hash=685f57256235421a4c0f9ec960c1c3ea}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Changhe},
+           giveni={C\bibinitperiod}}}%
+        {{hash=2498f586c91511448dfdc5b499ba86f7}{%
+           family={Xie},
+           familyi={X\bibinitperiod},
+           given={Zilong},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{f536892268348cdfbd6bd4ac693a33bb}
+      \strng{fullhash}{fa544a363bbd5500d386a080b2fd71ab}
+      \strng{fullhashraw}{fa544a363bbd5500d386a080b2fd71ab}
+      \strng{bibnamehash}{f536892268348cdfbd6bd4ac693a33bb}
+      \strng{authorbibnamehash}{f536892268348cdfbd6bd4ac693a33bb}
+      \strng{authornamehash}{f536892268348cdfbd6bd4ac693a33bb}
+      \strng{authorfullhash}{fa544a363bbd5500d386a080b2fd71ab}
+      \strng{authorfullhashraw}{fa544a363bbd5500d386a080b2fd71ab}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Advanced Transportation}
+      \field{title}{Freeway Traffic Safety Evaluation Using Virtual Reality: Focus on Compound Curve}
+      \field{year}{2022}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

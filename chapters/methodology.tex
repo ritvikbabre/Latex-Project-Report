@@ -1,224 +1,82 @@
-\chapter{Proposed Methodology}
+\chapter{Methodology}
 \label{ch:methodology}
 
 \section{Overview}
-This chapter outlines the proposed development methodology, implementation phases, testing procedures, and evaluation metrics for the VR driving simulator. The methodology follows an iterative design approach with continuous validation against the functional and non-functional requirements specified in Chapter~\ref{ch:system_analysis}.
+This chapter documents the development methodology followed in building DriveXR, including the architectural decisions made, the implementation phases actually carried out, the hardware evaluation process, and the testing procedures used to validate the system. Unlike a purely prospective plan, this chapter reflects the methodology as executed, including the pivots made in response to practical constraints encountered during development.
+
+\subsection{System Workflow}
+Figure~\ref{fig:workflow} illustrates the end-to-end operational workflow of a DriveXR training session, from initial hardware connection through to session completion.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figs/workflow_diagram.pdf}
+    \caption{DriveXR operational workflow, from headset and hardware connection through environment selection, active driving, and session completion.}
+    \label{fig:workflow}
+\end{figure}
+
+\section{Architectural Decision: PC-Hosted Deployment via Meta Quest Link}
+
+An early architectural decision concerned the deployment target for the application. Two approaches were considered: a fully standalone build running natively on the Meta Quest 3's Android-based operating system, or a PC-hosted build streamed to the headset via Meta Quest Link.
+
+The standalone approach was initially pursued but presented a fundamental incompatibility: the Logitech racing wheel hardware communicates over a proprietary USB HID protocol that requires host-side driver initialisation. The Quest 3's Android operating system does not support this initialisation sequence, and no accessible mechanism exists to sideload compatible drivers without device rooting, which would void hardware warranties and compromise the Meta Quest Link functionality required for hand tracking pass-through.
+
+The PC-hosted architecture was adopted instead. In this configuration, the Unity application runs natively on a Windows PC. The Meta Quest 3 connects to the PC via USB-C or wirelessly via Air Link, and Meta Quest Link streams the rendered stereoscopic output to the headset while simultaneously relaying head-tracking pose data and hand-tracking skeletal data back to the PC through the OpenXR runtime. The racing wheel, pedal set, and gear shifter connect directly to the PC via USB and are read natively by Unity's Input System.
+
+This architecture offers several practical advantages over the standalone approach:
+\begin{itemize}
+    \item \textbf{Full hardware compatibility} — the racing wheel initialises normally as it would for any PC game, with no driver limitations.
+    \item \textbf{Desktop-class rendering} — the application benefits from PC GPU rendering rather than being constrained to the Quest 3's mobile chipset, permitting higher fidelity vehicle models and environment detail.
+    \item \textbf{Retained VR capability} — head tracking and hand tracking function identically to a standalone deployment, since Meta Quest Link passes through the full OpenXR feature set including hand tracking subsystems.
+    \item \textbf{Simplified build pipeline} — the Android build target introduces its own category of build issues (Gradle configuration, AAR dependency conflicts, manifest merging) that do not apply to a Windows Standalone build.
+\end{itemize}
+
+The trade-off is that a PC must be present during simulator operation, which is acceptable for the intended use case of supervised driving-school training sessions where an instructor workstation is expected to be present regardless.
+
+\section{Hardware Selection and Evaluation}
+
+\subsection{Initial Hardware: Nitho Drive Pro One}
+Development began using a Nitho Drive Pro One, a budget-tier consumer racing wheel, to establish the core vehicle control pipeline. User testing during this phase revealed several limitations that motivated a hardware upgrade:
+\begin{itemize}
+    \item Steering rotation limited to 270°, compared to the 900° rotation range of real vehicle steering.
+    \item Undersized wheel diameter relative to an actual vehicle steering wheel, reducing physical immersion.
+    \item No separate gear shifter peripheral.
+    \item Accelerator and brake pedals positioned close together, causing testers — particularly those without prior VR experience — to misidentify which pedal they were pressing while wearing the headset, since the pedals are not visible during use.
+\end{itemize}
+
+\subsection{Upgraded Hardware: Logitech G29 and Driving Force Shifter}
+Following an application for project funding (Appendix~\ref{app:funding}), a Logitech G29 Driving Force racing wheel and matching Logitech Driving Force Shifter were acquired. The G29 offers 900° rotation, a full-size wheel, force feedback, and substantially greater pedal spacing. All testers who evaluated both units rated the G29 as significantly more realistic. The increased pedal spacing was sufficient to resolve the pedal identification issue observed with the Nitho unit, without requiring a non-standard pedal remapping.
 
 \section{Development Phases}
 
-\subsection{Phase 1: Hardware Prototype Development (Weeks 1-4)}
-\textbf{Objective:} Design and assemble the physical control hardware with Bluetooth connectivity.
+\subsection{Phase 1: Core Vehicle Physics}
+The initial development phase established the vehicle controller using Unity's WheelCollider physics components. A Tata Safari 3D model was rigged with four wheel colliders configured for front-wheel drive. Suspension parameters — spring strength, damper coefficients, and friction curves — were iteratively tuned to approximate the vehicle's real-world ride characteristics. A four-position automatic gearbox (Park, Reverse, Neutral, Drive) was implemented with speed-gated gear-change restrictions to prevent unrealistic gear changes at speed.
 
-\textbf{Tasks:}
-\begin{itemize}
-    \item Design 3D-printed mounting brackets for steering wheel and pedal assembly
-    \item Wire AS5600 magnetic rotary encoder to measure steering angle (0-900°)
-    \item Integrate FSR (Force Sensing Resistor) sensors for accelerator, brake, and clutch pedals
-    \item Configure ESP32-WROOM-32 microcontroller with Bluetooth Low Energy (BLE) firmware
-    \item Implement sensor calibration routines and input smoothing algorithms
-    \item Package electronics with 18650 Li-ion battery (3000mAh) for wireless operation
-    \item Test wireless latency and battery runtime under continuous operation
-\end{itemize}
+\subsection{Phase 2: XR Rig and Hardware Input Integration}
+The XR camera rig was anchored to a driver-seat transform inside the vehicle hierarchy so that head-tracked camera movement remained fixed relative to the cockpit rather than the physical room. Hardware input from the racing wheel was integrated through Unity's legacy Input System, with a delayed detection routine to prevent the Quest 3 controllers — which also register as joystick devices when connected via Link — from being mistaken for the racing wheel.
 
-\textbf{Deliverables:}
-\begin{itemize}
-    \item Functional steering wheel and pedal assembly
-    \item ESP32 firmware with BLE GATT server implementation
-    \item Calibration data and input-mapping profiles
-    \item Hardware documentation (circuit diagrams, component specifications)
-\end{itemize}
+A significant integration challenge arose from the G29's pedal axis behaviour: the pedals report an axis value of $+1$ at rest and $-1$ at full travel, the inverse of the conventional 0-to-1 convention. This was resolved with the remapping function:
+\[
+\text{input} = \text{Clamp}_{01}\!\left(\frac{-\text{raw}+1}{2}\right)
+\]
 
-\subsection{Phase 2: Unity 6 VR Environment Setup (Weeks 3-6)}
-\textbf{Objective:} Establish the core VR application framework with Meta Quest 3 integration.
+\subsection{Phase 3: VR Hand Interaction}
+VR hand tracking interaction was implemented for the steering wheel and horn using Unity's XR Interaction Toolkit. A passive interaction component (rather than a physics-based grab interactor) was used on the steering wheel mesh to prevent the XR runtime from relocating the mesh transform during grab events — an issue encountered during early implementation where the grab interactable caused the wheel to orbit around the vehicle rather than rotating in place. The corrected implementation records the angular position of the hand relative to the wheel centre at the moment of grab, frozen in the car body's coordinate frame to prevent feedback from the wheel's own rotation, and computes subsequent steering angle from the angular delta.
 
-\textbf{Tasks:}
-\begin{itemize}
-    \item Install Unity 6 (latest LTS release) with Meta XR SDK and OpenXR plugin
-    \item Configure project for standalone Quest 3 build with Android Build Support
-    \item Implement BLE communication layer using Unity Android plugins
-    \item Create input manager to map Bluetooth sensor data to vehicle controls
-    \item Set up VR camera rig with proper IPD (Interpupillary Distance) and comfort settings
-    \item Integrate spatial audio system using Meta Audio SDK
-    \item Implement performance profiling to maintain 90 FPS minimum frame rate
-\end{itemize}
+\subsection{Phase 4: NPC Traffic System}
+An initial NPC traffic controller was implemented using per-checkpoint raycasting and a rule-based stop/go system. Testing revealed significant reliability problems: vehicles frequently entered head-on deadlocks at intersections, oversteered on sharp turns causing wheel-spinning-in-place behaviour, and in some cases collided with the player vehicle despite explicit avoidance logic. 
 
-\textbf{Deliverables:}
-\begin{itemize}
-    \item Unity project configured for Quest 3 deployment
-    \item BLE connection manager with automatic device pairing
-    \item Input testing scene for calibration verification
-    \item Performance baseline measurements (frame rate, latency, memory usage)
-\end{itemize}
+The traffic controller was subsequently redesigned as an explicit finite state machine with five states: \textit{Driving}, \textit{Following}, \textit{StoppedAtLight}, \textit{CrossingIntersection}, and \textit{Yielding}. Key design principles adopted in the redesign include: vehicles never reverse (eliminating a major source of erratic behaviour); the player vehicle is always treated as a yield-priority obstacle rather than an object to steer around; steering uses a single pure-pursuit calculation toward the next checkpoint, hard-clamped to a maximum angle to prevent in-place wheel spinning; and obstacle detection uses a compact three-ray forward sensor fan rather than multiple per-checkpoint raycasts.
 
-\subsection{Phase 3: Vehicle Physics and Environment Modeling (Weeks 5-10)}
-\textbf{Objective:} Implement realistic vehicle dynamics and training environments.
-
-\textbf{Tasks:}
-\begin{itemize}
-    \item Integrate Unity Vehicle Physics Pro or custom WheelCollider-based system
-    \item Model 3-5 high-end vehicles (Mercedes-Benz C-Class, BMW 3-Series, Audi A4) with accurate mass, center of gravity, and power curves
-    \item Implement automatic transmission logic (P, R, N, D modes with torque converter simulation)
-    \item Develop manual transmission system with clutch engagement, gear synchronization, and stalling
-    \item Create urban environment with Indian traffic rules (RTO-compliant road signs, lane markings)
-    \item Build highway scenario with varying traffic density and speed limits
-    \item Develop parking lot with parallel, perpendicular, and angle parking challenges
-    \item Implement weather system (clear, rain, fog) affecting visibility and tire friction
-\end{itemize}
-
-\textbf{Deliverables:}
-\begin{itemize}
-    \item Vehicle physics validation report comparing acceleration, braking distances, and handling to real-world specifications
-    \item Three fully-modeled training environments
-    \item Weather system with configurable parameters
-    \item Asset optimization report ensuring mobile VR performance targets
-\end{itemize}
-
-\subsection{Phase 4: Training Features and Assessment System (Weeks 9-12)}
-\textbf{Objective:} Implement curriculum-aligned training scenarios and automated evaluation.
-
-\textbf{Tasks:}
-\begin{itemize}
-    \item Design 10+ training scenarios mapped to RTO driving test requirements
-    \item Implement real-time performance tracking: speed monitoring, lane adherence, signal compliance, safe following distance
-    \item Develop automated scoring algorithm based on weighted penalty system
-    \item Create instructor dashboard for session monitoring and control
-    \item Build session replay system with timeline scrubbing and camera angle switching
-    \item Implement error highlighting (visual overlays for lane violations, harsh braking, etc.)
-    \item Design PDF report generator with charts, score breakdown, and improvement recommendations
-\end{itemize}
-
-\textbf{Deliverables:}
-\begin{itemize}
-    \item Training scenario library with difficulty progression
-    \item Automated assessment system documentation
-    \item Sample session reports
-    \item Instructor interface prototype
-\end{itemize}
-
-\subsection{Phase 5: User Testing and Refinement (Weeks 11-14)}
-\textbf{Objective:} Validate system usability, comfort, and training effectiveness through pilot studies.
-
-\textbf{Tasks:}
-\begin{itemize}
-    \item Recruit 15-20 participants: 10 driving learners, 5 licensed drivers, 5 driving instructors
-    \item Conduct pre-test questionnaire: prior VR experience, driving experience, motion sickness susceptibility
-    \item Run supervised testing sessions (20-30 minutes each) with standardized scenarios
-    \item Measure simulator sickness using SSQ (Simulator Sickness Questionnaire)
-    \item Collect System Usability Scale (SUS) scores
-    \item Measure hardware latency using high-speed camera (input → visual response time)
-    \item Interview instructors for pedagogical feedback
-    \item Iterate on comfort settings, difficulty balancing, and UI clarity based on feedback
-\end{itemize}
-
-\textbf{Deliverables:}
-\begin{itemize}
-    \item User testing report with quantitative metrics
-    \item Simulator sickness analysis and mitigation recommendations
-    \item System usability evaluation
-    \item Revised software build incorporating user feedback
-\end{itemize}
-
-\section{Evaluation Metrics}
-
-\subsection{Technical Performance Metrics}
-\begin{itemize}
-    \item \textbf{Input Latency:} Time from physical control input to corresponding visual response. Target: $<$ 50ms (measured using high-speed camera at 240 FPS)
-    \item \textbf{Frame Rate Stability:} Percentage of frames rendered within 90-120 FPS range. Target: $>$ 95\% consistency
-    \item \textbf{Bluetooth Connection Reliability:} Packet loss rate and reconnection time. Target: $<$ 1\% packet loss, $<$ 2 seconds reconnection
-    \item \textbf{Battery Runtime:} Continuous operation time for wireless controls. Target: $>$ 4 hours per charge
-    \item \textbf{Physics Accuracy:} Deviation from real-world vehicle specifications (0-100 km/h acceleration, 100-0 km/h braking distance). Target: $<$ 10\% error
-\end{itemize}
-
-\subsection{User Experience Metrics}
-\begin{itemize}
-    \item \textbf{Simulator Sickness Questionnaire (SSQ):} Pre- and post-session scores measuring nausea, oculomotor discomfort, disorientation. Target: $<$ 20\% increase (mild symptoms)
-    \item \textbf{System Usability Scale (SUS):} 10-item questionnaire rated 1-5. Target: SUS score $>$ 70 (above average usability)
-    \item \textbf{Presence Questionnaire (PQ):} Sense of "being there" in virtual environment. Target: $>$ 4.0/7.0 (moderate to high presence)
-    \item \textbf{Instructor Satisfaction:} Likert-scale ratings (1-5) on training effectiveness, ease of use, feature completeness. Target: Mean $>$ 4.0
-\end{itemize}
-
-\subsection{Training Effectiveness Metrics (Future Work)}
-\begin{itemize}
-    \item \textbf{Skill Transfer:} Comparison of driving test pass rates between VR-trained vs traditionally-trained learners (requires long-term study with driving school partnership)
-    \item \textbf{Learning Curve Analysis:} Reduction in errors across repeated VR training sessions
-    \item \textbf{Instructor Time Savings:} Reduction in on-road training hours required after VR pre-training
-\end{itemize}
+\subsection{Phase 5: Environment Construction}
+Three training environments were constructed within a single Unity scene to allow instant switching without scene reloading. A straight highway environment provides an obstacle-free space for control familiarisation. A curved road environment introduces sustained steering correction and speed management through a series of sharp bends. A city grid environment — structured as a square perimeter road bisected by one horizontal and one vertical internal road, forming nine intersections — provides signalised intersection navigation with AI traffic. A world-space VR menu, interactable via both hand-ray pointing and hand tracking, allows the player to select and teleport between environments.
 
 \section{Testing Procedures}
 
-\subsection{Hardware Validation Tests}
-\begin{enumerate}
-    \item \textbf{Sensor Accuracy Test:} Compare AS5600 encoder readings to known steering angles using protractor. Measure linearity error across full rotation range.
-    \item \textbf{Latency Measurement:} Record simultaneous video of physical control and VR display at 240 FPS. Count frames between input change and visual response.
-    \item \textbf{Wireless Stability Test:} Monitor BLE connection over 4-hour continuous operation. Log disconnection events, packet loss, and latency spikes.
-    \item \textbf{Battery Life Test:} Measure current draw under typical usage. Calculate runtime from battery capacity and verify experimentally.
-\end{enumerate}
+\subsection{Informal Iterative Testing}
+Throughout development, informal testing sessions were conducted with the supervising faculty member and additional volunteer participants. These sessions focused on identifying usability issues, hardware ergonomics problems, and simulator comfort concerns rather than collecting formalised quantitative metrics, given the project's current stage of development.
 
-\subsection{Software Validation Tests}
-\begin{enumerate}
-    \item \textbf{Frame Rate Profiling:} Use Unity Profiler to identify performance bottlenecks. Ensure GPU and CPU frame times remain under 11ms (90 FPS).
-    \item \textbf{Physics Validation:} Compare simulated vehicle behavior against published specifications (acceleration curves, braking distances, cornering G-forces).
-    \item \textbf{Collision Detection:} Test edge cases (high-speed impacts, multi-object collisions, vehicle rollover) to ensure stable physics.
-    \item \textbf{Weather System:} Verify rain reduces tire friction coefficients and fog limits visibility range as intended.
-\end{enumerate}
+\subsection{Planned Formal Evaluation}
+Following completion of current refinements — height calibration, NPC traffic tuning, and full hand-tracking integration — a structured evaluation is planned incorporating the Simulator Sickness Questionnaire (SSQ) and System Usability Scale (SUS) administered to a cohort of novice and experienced drivers, alongside quantitative performance logging of frame rate stability and NPC traffic incident frequency.
 
-\subsection{User Study Protocol}
-\begin{enumerate}
-    \item \textbf{Pre-Session:} Informed consent, demographic questionnaire, pre-SSQ, VR safety briefing
-    \item \textbf{Tutorial Phase (5 min):} Guided introduction to controls in open environment with no traffic
-    \item \textbf{Training Session (20 min):} Three scenarios in order: (1) Urban navigation with traffic lights, (2) Highway merging and lane changes, (3) Parking maneuvers
-    \item \textbf{Post-Session:} Post-SSQ, SUS questionnaire, semi-structured interview about comfort, realism, and suggestions
-    \item \textbf{Data Collection:} Session logs (speed, steering, braking, errors), video recording of VR perspective, observer notes
-\end{enumerate}
-
-\section{Risk Mitigation}
-
-\subsection{Technical Risks}
-\begin{itemize}
-    \item \textbf{Risk:} Bluetooth latency exceeds acceptable threshold ($>$ 50ms)
-    
-    \textbf{Mitigation:} Implement predictive input filtering; option to fall back to USB wired connection; optimize BLE packet size and transmission frequency
-    
-    \item \textbf{Risk:} Quest 3 performance insufficient for complex environments
-    
-    \textbf{Mitigation:} Aggressive LOD (Level of Detail) system; occlusion culling; PC-VR tethered mode as fallback; asset optimization workflow
-    
-    \item \textbf{Risk:} Unity 6 compatibility issues with Meta XR SDK
-    
-    \textbf{Mitigation:} Verify SDK version compatibility before project start; maintain Unity LTS version; test on physical device frequently
-\end{itemize}
-
-\subsection{User Experience Risks}
-\begin{itemize}
-    \item \textbf{Risk:} High simulator sickness rates prevent extended use
-    
-    \textbf{Mitigation:} Implement comfort options (vignetting, snap turning, reduced FOV during acceleration); gradual onboarding; allow breaks; monitor SSQ scores
-    
-    \item \textbf{Risk:} Users unfamiliar with VR struggle with setup and controls
-    
-    \textbf{Mitigation:} Detailed tutorial mode; visual control hints; instructor-assisted first session; simplified UI design
-\end{itemize}
-
-\subsection{Development Risks}
-\begin{itemize}
-    \item \textbf{Risk:} Hardware assembly more complex than anticipated
-    
-    \textbf{Mitigation:} Modular design allowing component substitution; fallback to off-the-shelf gaming steering wheel; focus on software-first prototype
-    
-    \item \textbf{Risk:} Timeline delays due to technical challenges
-    
-    \textbf{Mitigation:} Prioritized feature list (MVP vs nice-to-have); weekly milestone tracking; buffer time in schedule
-\end{itemize}
-
-\section{Expected Outcomes}
-Upon completion of the proposed methodology, the project will deliver:
-\begin{enumerate}
-    \item A functional VR driving simulator prototype deployable on Meta Quest 3
-    \item Custom Bluetooth-enabled steering and pedal hardware
-    \item Documentation package including hardware schematics, software architecture, and user manuals
-    \item Pilot study results demonstrating system usability and technical performance
-    \item Identified areas for refinement and future development
-    \item Foundation for potential RTO certification and commercialization
-\end{enumerate}
-
-The validation data collected will inform iterative improvements and provide evidence for the system's viability as a driver training tool for driving schools.
+\section{Summary}
+The development methodology for DriveXR followed an iterative approach in which architectural and hardware decisions were revised in response to concrete technical constraints encountered during implementation — most significantly, the shift from a standalone Quest 3 deployment to a PC-hosted Meta Quest Link architecture, and the shift from a budget racing wheel to the Logitech G29. This iterative process, documented in full in this chapter, produced a working simulator validated through informal testing, with formal evaluation identified as near-term future work.
