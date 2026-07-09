@@ -9,78 +9,69 @@ This chapter presents a comprehensive analysis of requirements, constraints, des
 \section{Requirements Analysis}
 
 \subsection{Functional Requirements}
-Based on the identified research gaps and driving school needs, the system must fulfill the following functional requirements:
+Based on the identified research gaps and the driving-training use case, the system was required to fulfill the following functional requirements:
 
 \textbf{FR1: Realistic Vehicle Control Input}
 \begin{itemize}
-    \item Accept analog steering input with proportional angle mapping (0–900° rotation range)
-    \item Process independent accelerator, brake, and clutch pedal inputs with pressure sensitivity
-    \item Support gear selection for both automatic (P, R, N, D) and manual (1–6, Reverse) transmissions
-    \item Maintain input latency $<$ 50ms to preserve motor skill feedback loop~\cite{Harari2021}
+    \item Accept analog steering input with proportional angle mapping across the full 900° rotation range of the connected racing wheel.
+    \item Process independent accelerator and brake pedal inputs, correctly remapped for the connected hardware's resting-position convention.
+    \item Support gear selection for a four-position automatic transmission (Park, Reverse, Neutral, Drive), operable via keyboard, wheel buttons, and the physical H-pattern gear shifter.
+    \item Maintain input responsiveness sufficient to preserve the driver's motor-skill feedback loop, informed by the interaction-fidelity findings of Ebnali Harari et al.~\cite{Harari2021}.
 \end{itemize}
 
 \textbf{FR2: Immersive Visual and Audio Rendering}
 \begin{itemize}
-    \item Deliver stereoscopic 3D rendering at minimum 72 FPS per eye to minimize motion sickness~\cite{Lindal2019,Weidner2017}
-    \item Provide 90–110° field of view matching Meta Quest 3 specifications
-    \item Implement spatial audio with direction-dependent engine sounds, traffic noise, and ambient effects~\cite{GilCarvajal2024}
-    \item Render photorealistic vehicle interiors (dashboard, mirrors, gear shifter) for high-end car models (Mercedes-Benz, BMW, Audi)
+    \item Deliver stereoscopic 3D rendering at the Meta Quest 3's native 72 Hz refresh rate to minimize motion sickness~\cite{Lindal2019,Weidner2017}.
+    \item Provide a field of view matching the Meta Quest 3's native display specifications.
+    \item Implement directional audio feedback including engine sound scaled to vehicle speed, horn, tyre skid, and collision impact sound~\cite{GilCarvajal2024}.
+    \item Render a modelled vehicle interior (Tata Safari dashboard, steering wheel, mirrors) and three distinct outdoor environments.
 \end{itemize}
 
-\textbf{FR3: Accurate Vehicle Physics Simulation}
+\textbf{FR3: Vehicle Physics Simulation}
 \begin{itemize}
-    \item Model realistic acceleration, braking distances, and cornering dynamics based on vehicle mass, tire friction, and road conditions
-    \item Simulate clutch engagement points, gear ratios, and engine stalling for manual transmission training
-    \item Implement collision detection with appropriate force feedback and damage visualization
-    \item Support dynamic weather conditions (rain, fog) affecting visibility and traction
+    \item Model acceleration, braking, and cornering behaviour using Unity's WheelCollider physics, with suspension and friction parameters tuned to approximate real-world handling.
+    \item Implement speed-sensitive steering angle reduction to prevent unrealistic high-speed oversteer.
+    \item Implement collision response via Unity's physics engine and audio feedback scaled to impact velocity.
 \end{itemize}
 
-\textbf{FR4: Performance Monitoring and Assessment}
+\textbf{FR4: NPC Traffic and Environment Behaviour}
 \begin{itemize}
-    \item Log driving metrics: speed profile, lane deviation, braking smoothness, gear shift timing, steering angle variance
-    \item Generate automated assessment scores based on standardized criteria aligned with RTO testing protocols
-    \item Provide real-time visual/audio feedback for critical errors (e.g., sudden braking, lane violations)
-    \item Export session reports in PDF/CSV format for instructor review
+    \item Populate the city environment with AI-controlled vehicles that navigate a checkpoint graph, respond to traffic signals, and yield appropriately at intersections.
+    \item Provide three environments of progressive difficulty accessible via a VR-interactable menu, with instant switching and vehicle repositioning.
+    \item Support VR hand-tracking interaction for in-cockpit controls (steering wheel grab, horn).
 \end{itemize}
 
-\textbf{FR5: Scenario Management and Curriculum Integration}
+\textbf{FR5: Preliminary Evaluation Support}
 \begin{itemize}
-    \item Offer pre-defined training scenarios: urban roads, highways, parking, emergency braking, obstacle avoidance
-    \item Allow instructor-controlled difficulty adjustment (traffic density, time of day, weather)
-    \item Support session pause/resume and instant replay for error analysis
-    \item Maintain user profiles with progress tracking across multiple sessions
+    \item Support informal qualitative observation of driving behaviour across test sessions (Chapter~\ref{ch:results}).
+    \item Provide a foundation for future structured, logged performance assessment — identified as a near-term extension rather than a requirement of the current implementation (Chapter~\ref{ch:conclusion}).
 \end{itemize}
 
 \subsection{Non-Functional Requirements}
 
 \textbf{NFR1: Cost Effectiveness}
 \begin{itemize}
-    \item Target total system cost $<$ \$5000 (headset + custom hardware + PC) to be affordable for driving schools~\cite{Silvera2022}
-    \item Use consumer-grade components (Meta Quest 3, off-the-shelf sensors, 3D-printable enclosures)
-    \item Minimize recurring costs (no subscription fees for core functionality)
+    \item Use consumer-accessible hardware components — a Meta Quest 3 headset and a commercially available racing wheel and shifter — rather than custom-fabricated electronics, keeping total hardware cost well below dedicated commercial simulator installations~\cite{Silvera2022}.
+    \item Avoid recurring software licensing costs by using Unity's free-tier licensing at the project's current development scale.
 \end{itemize}
 
-\textbf{NFR2: Usability and Accessibility}
+\textbf{NFR2: Usability}
 \begin{itemize}
-    \item Enable setup and calibration within 10 minutes by non-technical driving instructors
-    \item Support adjustable seating position and control placements for users 150–200 cm height
-    \item Provide intuitive UI with minimal learning curve for first-time VR users
-    \item Include safety features: guardian boundary system, emergency stop button, comfort-mode reduced motion
+    \item Provide an in-VR tutorial overlay summarising controls at the start of a session, reducing the need for extensive verbal onboarding.
+    \item Support both VR-headset operation and desktop/keyboard fallback for development and testing purposes.
+    \item Provide a world-space VR menu for environment selection that responds to both hand-ray pointing and hand-tracking interaction.
 \end{itemize}
 
-\textbf{NFR3: Reliability and Maintainability}
+\textbf{NFR3: Reliability}
 \begin{itemize}
-    \item Ensure Bluetooth connection stability with automatic reconnection on signal loss
-    \item Design modular hardware allowing component replacement without full system disassembly
-    \item Provide diagnostic logs for troubleshooting connection, calibration, and performance issues
-    \item Support firmware updates via wireless OTA for bug fixes and feature enhancements
+    \item Ensure racing wheel and headset connections are established and verified before each session, as documented in the installation and user manuals.
+    \item Design the NPC traffic controller with watchdog recovery logic so that vehicles which become stuck or blocked self-resolve rather than requiring manual scene intervention.
 \end{itemize}
 
-\textbf{NFR4: Scalability and Extensibility}
+\textbf{NFR4: Extensibility}
 \begin{itemize}
-    \item Architecture must support addition of new vehicle models, environments, and training scenarios without core code refactoring
-    \item Enable future integration of motion platforms, haptic seats, or force-feedback steering wheels
-    \item Allow deployment on both tethered PC-VR and standalone Quest mode with adjustable graphics fidelity
+    \item Structure the three training environments within a single Unity scene using a shared checkpoint-graph and traffic-light framework, allowing additional environments to be added following the same pattern.
+    \item Keep vehicle physics, NPC AI, and VR interaction as separable components, allowing future extension (e.g., force feedback integration, additional vehicle models) without requiring a full architectural rewrite.
 \end{itemize}
 
 \section{Constraints and Design Trade-offs}
@@ -231,7 +222,7 @@ Figure~\ref{fig:system_architecture} illustrates the data flow and component int
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{figs/system_architecture.pdf}
+    \includegraphics[width=0.95\textwidth]{figs/system_architecture.png}
     \caption{System architecture showing data flow from hardware inputs (racing wheel, headset tracking) through the Unity simulation engine to VR rendering output via Meta Quest Link.}
     \label{fig:system_architecture}
 \end{figure}
@@ -264,66 +255,63 @@ The workflow diagram (Figure~\ref{fig:workflow}) shows the sequential process of
 
 \subsection{Detailed Functional Flow}
 \begin{enumerate}
-    \item \textbf{Pre-Session Setup (2–5 minutes):}
+    \item \textbf{Pre-Session Setup:}
     \begin{itemize}
-        \item Instructor selects trainee profile, training scenario (e.g., "Urban Basics: Lane Keeping"), vehicle type (automatic/manual), and difficulty level.
-        \item Trainee dons Quest 3 headset; system initiates guardian boundary setup and comfort calibration (IPD adjustment, brightness).
-        \item Hardware connection handshake: Steering wheel, pedals, and shifter auto-pair via Bluetooth; system runs diagnostic check (sensor ranges, battery level).
-        \item Virtual environment loads: vehicle spawns at scenario starting position; HUD displays initial instructions ("Adjust seat, check mirrors, fasten seatbelt").
+        \item The user connects the Logitech G29 wheel, pedals, and shifter to the host PC and starts Logitech G HUB.
+        \item The user dons the Meta Quest 3 headset and connects it to the PC via Meta Quest Link (wired) or Air Link (wireless).
+        \item The DriveXR application is launched on the PC and streams directly into the headset.
+        \item An in-VR tutorial overlay appears, summarising the control scheme, and fades automatically or on user dismissal.
     \end{itemize}
-    
-    \item \textbf{Simulation Loop (15–30 minutes typical session):}
+
+    \item \textbf{Environment Selection:}
     \begin{itemize}
-        \item \textbf{Input Capture (20 Hz):} ESP32 samples sensors (steering angle, pedal positions, gear state) → transmits via BLE HID packets.
-        \item \textbf{Physics Update (60 Hz):} Unity's FixedUpdate applies forces to vehicle rigidbody based on input → calculates acceleration, tire slip, suspension compression.
-        \item \textbf{Collision \& Traffic AI (30 Hz):} Raycast-based collision detection; traffic agents follow waypoint paths with lane-change logic; pedestrians obey traffic signals.
-        \item \textbf{Rendering (90 Hz):} Stereoscopic camera renders scene from driver's viewpoint → foveated rendering reduces peripheral detail → Quest 3 displays frames.
-        \item \textbf{Audio Spatialization (60 Hz):} FMOD calculates 3D engine sound (RPM-dependent), tire squeal (slip-dependent), horn/indicator clicks → Quest 3 speakers.
-        \item \textbf{Real-time Assessment:} Background thread logs events (speed violations, lane crossings, harsh braking) → updates live feedback HUD (color-coded indicators).
+        \item The user opens the world-space VR menu via hand-ray pointing or the palm-up hand gesture.
+        \item The user selects one of the three training environments (straight highway, curved road, or city grid).
+        \item The vehicle's position, rotation, and velocity are reset and it is placed at the selected environment's spawn point.
     \end{itemize}
-    
-    \item \textbf{Event Handling:}
+
+    \item \textbf{Active Driving Loop:}
     \begin{itemize}
-        \item \textbf{Scenario Triggers:} Dynamic events (e.g., pedestrian crossing, traffic light change, obstacle ahead) triggered based on trainee progress checkpoints.
-        \item \textbf{Instructor Override:} Wireless tablet interface allows real-time weather change, traffic density adjustment, or scenario pause for coaching feedback.
-        \item \textbf{Comfort Monitoring:} Optional: Detect prolonged stationary gaze (potential nausea indicator) → suggest break.
+        \item \textbf{Input Capture:} Unity's Input System reads racing wheel steering and pedal axes each fixed update step; the gear shifter's gate state is read via the Unity-Inputter package.
+        \item \textbf{Physics Update:} Unity's \texttt{FixedUpdate} applies motor torque, braking torque, and steering angle to the vehicle's WheelCollider components, producing acceleration, cornering, and suspension response.
+        \item \textbf{NPC Traffic (city environment only):} Each AI vehicle senses obstacles via a forward sphere-cast, checks its assigned traffic light state, and applies the appropriate speed and steering response (Chapter~\ref{ch:methodology}).
+        \item \textbf{Audio:} Engine pitch and volume scale with vehicle speed; horn, tyre skid, and collision sounds trigger on their respective conditions.
+        \item \textbf{VR Rendering:} The stereoscopic camera renders the driver's viewpoint each frame, streamed to the headset via Meta Quest Link at the Quest 3's native 72 Hz refresh rate.
     \end{itemize}
-    
-    \item \textbf{Session Termination:}
+
+    \item \textbf{VR Hand Interaction (concurrent with driving):}
     \begin{itemize}
-        \item Trainee completes scenario objectives (e.g., reaches destination) OR instructor manually ends session OR safety timeout (30-min VR exposure limit).
-        \item System saves session data: timestamped input logs, trajectory GPS coordinates, metric summaries.
+        \item The user may grab the in-VR steering wheel model with a tracked hand to steer via hand tracking in addition to the physical wheel.
+        \item The user may press the in-VR horn button via hand tracking to sound the horn.
     \end{itemize}
-    
-    \item \textbf{Post-Session Assessment (2 minutes):}
+
+    \item \textbf{Session End:}
     \begin{itemize}
-        \item Assessment module computes scores: (1) Speed Compliance (85/100), (2) Lane Discipline (78/100), (3) Smooth Braking (92/100), (4) Gear Shifting (Manual only, 88/100), (5) Observation (mirror checks, 70/100).
-        \item Generates PDF report with score breakdown, heatmap of violations on route map, improvement suggestions.
-        \item Updates trainee profile: increments training hours, marks scenario as "Passed" (if overall $>$ 75\%) or "Retry Recommended."
-        \item Instructor reviews report with trainee; schedules follow-up session or progresses to advanced scenarios.
+        \item The user removes the headset and closes the application, or switches to a different environment via the VR menu to continue in a new session context.
+        \item No automated scoring, PDF report generation, or persistent trainee profile exists in the current implementation; session observations were instead captured qualitatively by the observing researcher during testing (Chapter~\ref{ch:results}). Automated, logged performance assessment is identified as future work (Chapter~\ref{ch:conclusion}).
     \end{itemize}
 \end{enumerate}
 
 \section{Feasibility Study}
 
-A comprehensive feasibility analysis is essential to validate the viability of the VR Driving Simulator project across technical, economic, operational, and schedule dimensions. This section systematically evaluates each feasibility aspect to establish project confidence and identify potential risk mitigation strategies.
+This section evaluates the feasibility of the DriveXR project across technical, economic, operational, schedule, and legal dimensions, based on the project's actual development experience and outcomes rather than solely prospective projection.
 
 \subsection{Technical Feasibility}
 
 \textbf{Hardware Capabilities and Limitations:}
-The project relies on consumer-grade VR hardware (Meta Quest 3) and custom Bluetooth control assemblies. Technical feasibility is high given the following established capabilities:
+The project relies on a consumer-grade VR headset (Meta Quest 3) and a commercially available racing wheel and shifter (Logitech G29 and Driving Force Shifter) rather than custom-fabricated control hardware. Technical feasibility was demonstrated in practice through the following:
 
 \begin{itemize}
-    \item \textbf{VR Headset Performance:} Meta Quest 3 offers 90--120 Hz refresh rates, 2064×2208 pixels per eye, and inside-out tracking with sub-millimeter accuracy. These specifications meet the minimum requirements for comfortable, immersive driving simulation~\cite{Lindal2019,Weidner2017}. The standalone architecture eliminates PC tethering constraints, enhancing portability for driving school deployments.
-    
-    \item \textbf{Bluetooth Control Latency:} ESP32 microcontroller with BLE 5.0 achieves input-to-response latency of 30--50ms in controlled tests. While this marginally exceeds the 20ms ideal threshold for high-fidelity force feedback systems~\cite{Harari2021}, it remains within acceptable bounds for educational driving training where reaction time is less critical than in competitive racing scenarios. Mitigation strategies include predictive input smoothing and local sensor fusion on the ESP32 to reduce jitter.
-    
-    \item \textbf{Physics Simulation Complexity:} Unity's built-in physics engine (PhysX) supports realistic vehicle dynamics at 60 Hz fixed timestep. Custom wheel collider scripts can model differential torque, suspension travel, and tire slip based on Pacejka tire models. Benchmark tests on similar projects~\cite{Silvera2022} demonstrate that mid-range desktop GPUs (RTX 3060 equivalent) can maintain 90 FPS stereoscopic rendering with 20--30 dynamic traffic agents, meeting real-time performance targets.
-    
-    \item \textbf{Integration Challenges:} Cross-platform compatibility between Quest 3 (Android-based) and Unity (Windows development environment) requires careful build configuration. Oculus Integration SDK and XR Plugin Management provide mature toolchains with extensive documentation. Initial prototyping confirms successful BLE pairing and input mapping via Unity Input System without major technical blockers.
+    \item \textbf{VR Headset Performance:} The Meta Quest 3 offers a native 72 Hz refresh rate and inside-out head and hand tracking, which proved sufficient for comfortable operation once the PC-hosted Meta Quest Link architecture was adopted (Chapter~\ref{ch:methodology}). Testing confirmed stable rendering at this native refresh rate across all three environments.
+
+    \item \textbf{Racing Wheel Input Latency:} The Logitech G29 connects via USB directly to the host PC, and Unity's Input System reads its axes and buttons without the latency and pairing concerns associated with a wireless BLE control scheme. This was one of the deciding factors, alongside the platform incompatibility discussed in Section~\ref{sec:control_input_architecture}, in moving away from the originally proposed custom wireless controller approach.
+
+    \item \textbf{Physics Simulation Complexity:} Unity's built-in WheelCollider physics component, running at Unity's default fixed physics timestep, proved adequate for the vehicle handling characteristics targeted by this project once suspension and friction parameters were iteratively tuned (Chapter~\ref{ch:methodology}). No custom tyre-slip modelling beyond Unity's built-in friction curves was required to achieve acceptable qualitative handling feel, as confirmed in testing (Chapter~\ref{ch:results}).
+
+    \item \textbf{Integration Challenges:} The most significant technical integration challenge encountered was not cross-platform build configuration in the abstract, but the specific incompatibility between USB HID racing wheel hardware and a standalone Quest 3 deployment, which required the architectural pivot to a PC-hosted Meta Quest Link model documented in Chapter~\ref{ch:methodology}. A secondary integration challenge was reading the Logitech Driving Force Shifter's gear gates, which required a third-party Unity package (Unity-Inputter) wrapping the Logitech G HID SDK, since the shifter's button states were not reliably exposed through Unity's legacy Input Manager on this system.
 \end{itemize}
 
-\textbf{Risk Assessment:} Technical risks are low to moderate. The primary concern is sustained 90 FPS performance under complex scenarios (heavy rain, dense urban traffic). Mitigation involves progressive scene optimization (occlusion culling, LOD models, asynchronous asset loading) and adaptive quality settings based on real-time frame rate monitoring.
+\textbf{Risk Assessment:} The technical risks that materialised during development were concentrated in NPC traffic AI reliability (vehicles becoming stuck or deadlocked at intersections) rather than in rendering performance, which remained stable throughout testing. The NPC controller was substantially reworked as an explicit state machine with watchdog recovery logic to address this (Chapter~\ref{ch:methodology}), though some limitations remain at high intersection traffic density (Chapter~\ref{ch:results}).
 
 \subsection{Economic Feasibility}
 
@@ -371,49 +359,49 @@ A six-month development schedule is proposed, aligned with academic project time
 \small
 \begin{tabular}{|l|l|p{6cm}|}
 \hline
-\textbf{Phase} & \textbf{Duration} & \textbf{Deliverables} \\ \hline
-\textbf{Phase 1: Hardware Prototyping} & Weeks 1--4 & Functional steering wheel, pedals, gear shifter with BLE connectivity; ESP32 firmware validated. \\ \hline
-\textbf{Phase 2: Core Simulation} & Weeks 5--10 & Unity environment with basic vehicle physics, 2 vehicle models, 1 urban scenario; Quest 3 integration confirmed. \\ \hline
-\textbf{Phase 3: Feature Development} & Weeks 11--16 & Manual transmission logic, weather system, traffic AI, collision detection, HUD feedback, audio integration. \\ \hline
-\textbf{Phase 4: Assessment Module} & Weeks 17--20 & Automated scoring algorithm, PDF report generation, instructor dashboard prototype. \\ \hline
-\textbf{Phase 5: Testing \& Refinement} & Weeks 21--24 & User testing (15--20 participants), bug fixes, performance optimization, documentation finalization. \\ \hline
+\textbf{Phase} & \textbf{Status} & \textbf{Deliverables} \\ \hline
+\textbf{Phase 1: Core Vehicle Physics} & Completed & Tata Safari model with tuned WheelCollider physics, four-position automatic gearbox. \\ \hline
+\textbf{Phase 2: XR Rig and Hardware Input} & Completed & XR camera rig, PC-hosted Meta Quest Link architecture, Logitech G29 wheel and pedal integration, gear shifter integration via third-party package. \\ \hline
+\textbf{Phase 3: VR Hand Interaction} & Completed & Hand-tracking-based steering wheel and horn interaction. \\ \hline
+\textbf{Phase 4: NPC Traffic System} & Completed, ongoing refinement & Finite-state-machine traffic controller with obstacle avoidance, traffic light compliance, and intersection yield logic. \\ \hline
+\textbf{Phase 5: Environment Construction} & Completed & Three training environments (straight highway, curved road, signalised city grid) with VR environment-selection menu. \\ \hline
+\textbf{Phase 6: Preliminary Testing} & Completed & Informal test sessions with supervising faculty and volunteer participants (Chapter~\ref{ch:results}). \\ \hline
+\textbf{Phase 7: Formal Evaluation} & Planned (future work) & Structured user study using SSQ and SUS instruments across a larger participant cohort. \\ \hline
 \end{tabular}
 \end{table}
 
-\textbf{Critical Path Analysis:}
-The longest dependency chain runs through vehicle physics tuning (Phase 2) → manual transmission integration (Phase 3) → assessment validation (Phase 4). Delays in physics modeling directly impact downstream features. Buffer time (Weeks 23--24) allocated for unforeseen technical challenges.
+\textbf{Development Approach:}
+Unlike the phased timeline originally proposed, actual development followed an iterative approach in which architectural decisions were revised in direct response to concrete technical constraints encountered during implementation. The most significant such revision was the shift from a proposed standalone Quest 3 deployment with custom Bluetooth hardware to the implemented PC-hosted Meta Quest Link architecture with a commercial racing wheel, discussed in detail in Chapter~\ref{ch:methodology}. This pivot was necessitated by a platform-level incompatibility discovered during development rather than being anticipated in the original project plan.
 
 \textbf{Resource Availability:}
-Team comprises 3 engineering students (1 hardware specialist, 1 Unity developer, 1 UX/testing coordinator) with faculty advisor oversight. Development scheduled during academic semester; no exam period conflicts. Hardware procurement lead time: 2 weeks (local electronics markets in Mumbai). No external dependencies on third-party contractors.
+Development was carried out by a single M.Tech student under the supervision of the project guide, rather than the multi-person team structure originally envisioned. This resource constraint is reflected in the project's current scope — a fully functional core simulator with preliminary evaluation, rather than a fully validated, deployment-ready system with a formal user study already completed.
 
-\textbf{Schedule Risks:}
+\textbf{Schedule Risks Realised During Development:}
 \begin{itemize}
-    \item \textbf{Hardware Delays:} Component sourcing issues (e.g., load cell sensors out of stock) could push Phase 1 by 1--2 weeks. Mitigation: Pre-order critical components; identify backup suppliers.
-    \item \textbf{Learning Curve:} Team's first VR project; Unity XR development paradigms may require additional learning time. Mitigation: Frontload online tutorials (Weeks 1--2); allocate Phase 2 buffer for experimentation.
-    \item \textbf{Testing Recruitment:} Difficulty recruiting 20 diverse participants for Phase 5. Mitigation: Leverage VJTI student body; offer participation certificates.
+    \item \textbf{Hardware platform incompatibility.} The most significant schedule impact came from discovering, partway through development, that USB HID racing wheel hardware could not be used with a standalone Quest 3 deployment. Resolving this required an architectural pivot rather than a simple bug fix, consuming development time not accounted for in an initial plan built around the original ESP32-based approach.
+    \item \textbf{NPC traffic AI reliability.} The first rule-based NPC traffic implementation required substantial rework into a state-machine architecture after repeated reliability failures (Chapter~\ref{ch:methodology}), representing a second major unplanned development effort.
+    \item \textbf{Single-developer capacity.} With one student rather than a multi-person team, feature scope was necessarily prioritised toward a stable core simulator over the fuller feature set (manual transmission, automated assessment, multi-vehicle support) originally envisioned.
 \end{itemize}
 
-\textbf{Schedule Verdict:} Feasible with realistic timelines. Six-month duration balances ambition with academic constraints. Success depends on disciplined milestone tracking and proactive risk management.
+\textbf{Schedule Verdict:} The project's actual schedule diverged meaningfully from its original proposal, primarily due to the two architectural pivots described above. The current state represents a complete, working core simulator with preliminary evaluation; formal user study, additional vehicle models, and automated assessment remain as future work rather than completed deliverables, reflecting a realistic reprioritisation given single-developer resourcing.
 
 \subsection{Legal and Regulatory Feasibility}
 
 \textbf{Intellectual Property and Licensing:}
 \begin{itemize}
-    \item \textbf{Software Licensing:} Unity Pro educational license permits non-commercial academic projects. Open-source release under MIT License planned to encourage community adoption~\cite{Silvera2022}.
-    \item \textbf{Asset Usage:} Vehicle 3D models sourced from Unity Asset Store with appropriate licenses (Standard License allows unlimited project use; Extended License not required for educational distribution). Custom textures created in-house avoid copyright concerns.
-    \item \textbf{Patent Landscape:} Prior art search reveals no blocking patents for Bluetooth driving controls in VR training. Generic input mapping techniques fall under established prior art. Novel contributions (e.g., clutch engagement modeling algorithm) potentially patentable but not pursued during academic phase.
+    \item \textbf{Software Licensing:} Developed under Unity's free-tier license, appropriate for the project's current academic, non-commercial scope.
+    \item \textbf{Asset and Package Usage:} The vehicle model and environment assets used are subject to their respective source licenses. The project additionally depends on a third-party open-source Unity package (Unity-Inputter) for reading the racing wheel shifter's input, used under its published license terms.
+    \item \textbf{Patent Landscape:} No prior art search or patent filing has been conducted at this stage of the project, as it remains an academic prototype rather than a commercialisation candidate.
 \end{itemize}
 
-\textbf{Safety and Liability:}
+\textbf{Safety Considerations:}
 \begin{itemize}
-    \item \textbf{VR Safety Guidelines:} System complies with Oculus Health \& Safety warnings: age restriction (13+), seizure/motion sickness disclaimers, play area boundary setup. Informed consent forms distributed to pilot testers.
-    \item \textbf{Training Validity:} Current Indian regulations do not recognize VR training hours toward RTO learning license requirements. System positioned as supplemental training tool, not replacement for mandatory on-road practice. Future advocacy for regulatory acceptance requires longitudinal validation studies (beyond project scope)~\cite{He2022}.
+    \item \textbf{VR Safety Guidelines:} Standard Meta Quest 3 health and safety guidance applies (age restrictions, motion sickness disclaimers, guardian boundary setup). Testers were informed of potential simulator sickness prior to sessions.
+    \item \textbf{Hardware Safety:} During development, an attempt to apply custom force-feedback centering to the racing wheel produced an unexpectedly strong force that caused physical damage to the wheel's mount. This was identified, the feature was disabled, and it is documented as a caution for any future force-feedback implementation work (Chapter~\ref{ch:conclusion}). This incident underscores the importance of conservative, incremental testing when working with force-feedback-capable hardware.
+    \item \textbf{Training Validity:} Indian regulations do not currently recognise VR training hours as equivalent to on-road training hours. DriveXR is positioned purely as a supplementary familiarisation tool at its current stage, not as a substitute for mandatory on-road instruction. Any future regulatory engagement would require the formal longitudinal validation this project has not yet undertaken~\cite{He2022}.
 \end{itemize}
 
-\textbf{Data Privacy:}
-Session logs (driving metrics, error patterns) constitute personal performance data. System complies with data minimization principles: no video recording of users, no biometric data collection, anonymized identifiers for analytics. GDPR-equivalent consent mechanisms (opt-in data sharing for research) implemented.
-
-\textbf{Legal Verdict:} Feasible with standard precautions. No legal blockers identified for academic prototype development and pilot testing. Commercial deployment requires legal entity formation, liability insurance, and formal safety certifications (ISO 26262 compliance for automotive training systems).
+\textbf{Legal Verdict:} No legal blockers apply to the project at its current academic prototype stage. Any future commercial or institutional deployment would require formal licensing review, liability consideration given the hardware safety incident noted above, and engagement with relevant regulatory bodies regarding training-hour recognition — all identified as beyond the current project's scope.
 
 \subsection{Overall Feasibility Conclusion}
 
@@ -424,12 +412,12 @@ Session logs (driving metrics, error patterns) constitute personal performance d
 \begin{tabular}{|l|c|p{6.5cm}|}
 \hline
 \textbf{Feasibility Dimension} & \textbf{Rating} & \textbf{Key Justification} \\ \hline
-Technical & High & Proven hardware/software components; minor optimization challenges. \\ \hline
-Economic & Very High & 85--95\% cost reduction vs. commercial alternatives; 1.2-month ROI. \\ \hline
-Operational & Moderate-High & User acceptance positive; requires instructor training and pilot validation. \\ \hline
-Schedule & High & Realistic 6-month timeline with defined milestones and buffers. \\ \hline
-Legal & High & No IP conflicts; standard safety compliance; regulatory advocacy long-term. \\ \hline
+Technical & Demonstrated & Core simulator fully functional; NPC traffic and force-feedback integration remain areas of ongoing refinement. \\ \hline
+Economic & Favourable (qualitative) & Hardware cost compares favourably to commercial alternatives; rigorous ROI analysis deferred pending deployment-scale data. \\ \hline
+Operational & Preliminary & Positive informal testing feedback; formal usability study and instructor-training protocol not yet conducted. \\ \hline
+Schedule & Adapted & Original phased plan revised significantly due to two major architectural pivots; current scope reflects single-developer resourcing. \\ \hline
+Legal & Adequate for current stage & No blockers for academic prototype; commercial deployment would require further legal and regulatory engagement. \\ \hline
 \end{tabular}
 \end{table}
 
-The feasibility study confirms that the VR Driving Simulator project is \textbf{highly viable} across all critical dimensions. Technical maturity of consumer VR hardware, compelling economic advantages, achievable development timelines, and manageable regulatory requirements collectively support a strong probability of successful implementation. The primary recommendation is to proceed with phased development, emphasizing early user feedback loops and iterative refinement to validate operational assumptions before scaling to multi-school deployments.
+The feasibility assessment reflects a project that has successfully delivered a working, demonstrable VR driving simulator built from consumer-accessible hardware, while several dimensions originally assessed prospectively — economic ROI, operational readiness, and regulatory pathway — remain to be validated through the formal evaluation and any future institutional engagement identified as future work in Chapter~\ref{ch:conclusion}. The project's technical core is sound and functioning; its readiness for real-world deployment beyond a research and demonstration context is not yet established and should not be overstated.
