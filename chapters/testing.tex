@@ -1,0 +1,98 @@
+\chapter{Testing}
+\label{ch:testing}
+
+\section{Overview}
+This chapter documents the functional testing carried out during DriveXR's development. Testing was primarily iterative and issue-driven: features were implemented, tested interactively in the target environment (Unity Editor Play mode and, where applicable, the built PC application with the Meta Quest 3 connected via Meta Quest Link), and refined based on observed defects. This chapter presents the significant defects identified during this process as structured test cases, documenting the test performed, the expected behaviour, the actual (defective) behaviour observed, and the resolution applied.
+
+\section{Test Case Format}
+Each test case below follows a consistent structure: a unique identifier, the component under test, a description of the test performed, the expected outcome, the actual outcome observed, and the final status after resolution.
+
+\section{Vehicle Control Test Cases}
+
+{\small
+\begin{longtable}{|p{1.3cm}|p{3cm}|p{4.5cm}|p{4.5cm}|}
+\caption{Vehicle Control Test Cases}\label{tab:tc_vehicle}\\
+\hline
+\textbf{ID} & \textbf{Component} & \textbf{Test / Expected} & \textbf{Actual Result / Resolution} \\ \hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Component} & \textbf{Test / Expected} & \textbf{Actual Result / Resolution} \\ \hline
+\endhead
+\hline \multicolumn{4}{r}{{Continued on next page}} \\
+\endfoot
+\endlastfoot
+
+TC-01 & Gear shifting (Park brake release) & Shift from Park to Drive should release all brake torque and allow the vehicle to move. & Vehicle remained immobile after shifting out of Park; brake torque set in Park was never explicitly cleared on gear change. \textbf{Resolved} by adding an explicit brake-release pass at the start of each physics step whenever the gear is not Park and no braking input is active. \\ \hline
+
+TC-02 & Drive/Reverse direction & Selecting Drive should move the vehicle forward and Reverse should move it backward. & Directions were inverted — Drive moved the vehicle backward and Reverse moved it forward. \textbf{Resolved} by adding an \texttt{invertDriveDirection} toggle to the vehicle controller, allowing direction to be corrected without altering the core drivetrain logic. \\ \hline
+
+TC-03 & G29 pedal input mapping & Accelerator and brake pedals should map to 0 (unpressed) to 1 (fully pressed). & Vehicle accelerated immediately upon entering Drive with no pedal pressed. Root cause: G29 pedal axes rest at $+1$ and travel to $-1$, the reverse of the expected convention. \textbf{Resolved} with an explicit remap formula: input = Clamp01((-raw + 1) / 2). \\ \hline
+
+TC-04 & Racing wheel device detection & The system should distinguish the physical racing wheel from Meta Quest controllers, both of which register as joystick devices when connected via Meta Quest Link. & Quest controllers were initially misidentified as the racing wheel, causing erratic uncommanded input. \textbf{Resolved} by filtering joystick device names containing "oculus", "quest", or "meta" during wheel detection. \\ \hline
+
+TC-05 & Gear shifter input (H-pattern) & Moving the physical shifter through its gates should change the simulated gear accordingly. & No response — the shifter's gate signals were not detected via Unity's legacy Input Manager, either as axes or as standard joystick buttons, despite the hardware being confirmed functional via Logitech G HUB. \textbf{Resolved} by integrating a third-party Unity package (Unity-Inputter) that reads the shifter's gate states directly via the Logitech G HID SDK. \\ \hline
+
+TC-06 & Force feedback centering spring & A moderate, constant centering force should be applied to the wheel to simulate steering resistance. & An initial implementation caused force to increase sharply with rotation angle, becoming strong enough to damage the physical wheel mount. \textbf{Resolved} by disabling the feature entirely pending safer, incremental parameter testing; documented as an open risk in Chapter~\ref{ch:conclusion}. \\ \hline
+
+\end{longtable}}
+
+\section{VR and XR Interaction Test Cases}
+
+{\small
+\begin{longtable}{|p{1.3cm}|p{3cm}|p{4.5cm}|p{4.5cm}|}
+\caption{VR and XR Interaction Test Cases}\label{tab:tc_vr}\\
+\hline
+\textbf{ID} & \textbf{Component} & \textbf{Test / Expected} & \textbf{Actual Result / Resolution} \\ \hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Component} & \textbf{Test / Expected} & \textbf{Actual Result / Resolution} \\ \hline
+\endhead
+\hline \multicolumn{4}{r}{{Continued on next page}} \\
+\endfoot
+\endlastfoot
+
+TC-07 & Steering wheel hand grab & Grabbing the in-VR steering wheel with a tracked hand should rotate the wheel visually about its own centre. & The wheel instead orbited around the vehicle rather than spinning in place. Root cause: an XR grab interactable was repositioning the mesh transform directly, combined with an off-centre mesh pivot. \textbf{Resolved} by switching to a passive interaction component and calculating steering angle from hand position independently of the mesh's own transform. \\ \hline
+
+TC-08 & Steering wheel rest position & The steering wheel should remain at its designed rest orientation when the application starts. & The wheel snapped to a zero rotation at scene start rather than its intended tilted orientation. \textbf{Resolved} by capturing the wheel's actual rest rotation in \texttt{Awake()} and applying steering rotation as an offset from that captured value rather than overwriting it. \\ \hline
+
+TC-09 & VR menu button interaction & Pointing at and selecting a menu button via hand tracking should trigger the corresponding action. & Menu opened correctly via hand tracking, but button presses did not register. \textbf{Resolved} by confirming the Event System used an XR-compatible input module and configuring the canvas raycaster to support both ray and poke-based hand interaction. \\ \hline
+
+TC-10 & Camera position stability & The VR camera should remain fixed relative to the driver's seat regardless of the player's physical position in their room-scale play area. & The Meta Quest 3's room-scale tracking allowed the camera to drift outside the vehicle mesh if the player physically shifted position. \textbf{Resolved} by implementing a camera-lock script that continuously corrects the XR Origin's position to maintain a fixed offset relative to the vehicle body, counteracting room-scale drift while preserving head rotation tracking. \\ \hline
+
+TC-11 & Hand tracking in PC-hosted build & Hand tracking should function identically whether running as a standalone Quest build or a PC-hosted build streamed via Meta Quest Link. & Hand tracking initially appeared not to function in the PC-hosted build. \textbf{Resolved} by confirming the Hand Tracking Subsystem feature was separately enabled under the PC tab of OpenXR project settings, distinct from the Android tab settings used for the earlier standalone build. \\ \hline
+
+\end{longtable}}
+
+\section{NPC Traffic Test Cases}
+
+{\small
+\begin{longtable}{|p{1.3cm}|p{3cm}|p{4.5cm}|p{4.5cm}|}
+\caption{NPC Traffic System Test Cases}\label{tab:tc_npc}\\
+\hline
+\textbf{ID} & \textbf{Component} & \textbf{Test / Expected} & \textbf{Actual Result / Resolution} \\ \hline
+\endfirsthead
+\hline
+\textbf{ID} & \textbf{Component} & \textbf{Test / Expected} & \textbf{Actual Result / Resolution} \\ \hline
+\endhead
+\hline \multicolumn{4}{r}{{Continued on next page}} \\
+\endfoot
+\endlastfoot
+
+TC-12 & Intersection light compliance & NPC vehicles already crossing an intersection when the light changes should complete their crossing rather than stopping mid-intersection. & Vehicles stopped abruptly in the middle of intersections when the signal changed during their crossing. \textbf{Resolved} by introducing an intersection-occupancy flag, set when a vehicle exits the stop-zone trigger, that overrides light-based stopping until the vehicle reaches its next checkpoint. \\ \hline
+
+TC-13 & Intersection deadlock & Two NPC vehicles approaching an intersection head-on should not remain permanently blocked. & Vehicles would sometimes remain stopped indefinitely, facing each other with neither yielding. \textbf{Resolved} with a priority-ordering mechanism using a stable per-vehicle identifier, combined with a courtesy-yield timeout after which a blocked vehicle pauses briefly to allow the opposing vehicle through. \\ \hline
+
+TC-14 & Sharp turn navigation & NPC vehicles should complete turns at city intersections within a reasonable time. & Vehicles attempting sharp turns would sometimes rotate in place for extended periods (observed up to several minutes) without completing the turn, due to a steering angle limit narrower than the required turning radius. \textbf{Resolved} by implementing a speed-dependent steering limit (wider at low speed, narrower at high speed) and pre-planning reduced speed on the approach to sharp turns. \\ \hline
+
+TC-15 & Player vehicle right-of-way & NPC vehicles should never collide with or attempt to steer around the player vehicle. & Some NPC vehicles occasionally collided with the player vehicle despite tag-based detection logic. Root cause: detection checked only the immediate collider's tag, missing cases where the player's child colliders were hit instead of the root object. \textbf{Resolved} by checking the collider, its parent hierarchy, and the transform root for the player tag and vehicle controller component. \\ \hline
+
+TC-16 & Vehicle stability during turns & NPC vehicles should not flip over while cornering. & Vehicles occasionally flipped, particularly during sharper turns. \textbf{Resolved} by lowering the vehicle's centre of mass, clamping angular velocity on the roll and pitch axes, and adding an active self-righting torque proportional to deviation from the vehicle's upright orientation. \\ \hline
+
+TC-17 & Traffic jam self-resolution & A blocked or stuck NPC vehicle should not cause a permanent, unrecoverable traffic jam. & Vehicles legitimately stopped behind an obstacle were not eligible for the stuck-recovery watchdog, since the watchdog only activated when a vehicle was attempting to move but failing, causing indefinite jams once one vehicle became stuck on geometry. \textbf{Resolved} by adding a second, independent blocked-timeout timer that triggers recovery for vehicles stopped behind an obstacle for an extended period, distinct from the geometry-stuck timer. \\ \hline
+
+TC-18 & Off-road / fallen vehicle recovery & NPC vehicles should not become permanently lost if they fall through map geometry (e.g., at sidewalk collider gaps). & Vehicles occasionally fell through gaps between road and sidewalk colliders and became stuck below the visible road surface indefinitely. \textbf{Resolved} with a grounding watchdog that detects a significant drop below the vehicle's last known grounded height and snaps the vehicle back onto its path near its next checkpoint. \\ \hline
+
+\end{longtable}}
+
+\section{Summary}
+The test cases documented in this chapter reflect an iterative, defect-driven testing process characteristic of an actively developed system rather than a single formal test pass against a fixed specification. Several defects — particularly those relating to the NPC traffic controller and the racing wheel's gear shifter input — required substantial rework rather than isolated bug fixes, and are discussed in greater architectural detail in Chapter~\ref{ch:methodology}. The resolution of the force feedback centering spring defect (TC-06) is highlighted specifically as a hardware safety consideration for any future work extending force feedback functionality.
